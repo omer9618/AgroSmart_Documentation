@@ -9,24 +9,24 @@ The proposed AgroSmart platform is governed by a three-tier resource management 
 
 ```mermaid
 graph TD
-    subgraph Tier 1: Strategic & Regulatory Oversight
+    subgraph tier1 ["Tier 1: Strategic & Regulatory Oversight"]
         PS[Project Sponsor]
         AB[Agricultural Advisory Board]
     end
-    subgraph Tier 2: Core MVP Execution Squad (Funded Tier)
+    subgraph tier2 ["Tier 2: Core MVP Execution Squad (Funded Tier)"]
         MOS[Muhammad Omer Siddiqui <br> Engagement Director & Lead Architect]
         ER[Dr. Elena Rostova <br> Full-Stack Backend & Data Specialist]
         TM[Tariq Mahmood <br> Frontend Mobile & QA Specialist]
     end
-    subgraph Tier 3: Subsidized Shared Agency Resource Tier (Scaled Tier)
+    subgraph tier3 ["Tier 3: Subsidized Shared Agency Resource Tier (Scaled Tier)"]
         MV[Marcus Vance <br> Scrum Master]
         AM[Alex Mercer <br> Backend Developer]
         SJ[Dr. Sarah Jenkins <br> Data & ML Specialist]
         KS[Kenji Sato <br> Blockchain Developer]
         FA[Fatima Al-Sayed <br> DevOps Engineer]
     end
-    Tier 1 --> Tier 2
-    Tier 2 --> Tier 3
+    tier1 --> tier2
+    tier2 --> tier3
 ```
 
 #### Governance Tier Descriptions
