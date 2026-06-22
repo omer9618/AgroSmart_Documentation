@@ -88,9 +88,10 @@ Logging recommendation data to the public Ethereum Sepolia contract via smart co
 
 #### 5.2 Technical Change Escalation Path
 To prevent model execution exceptions caused by schema mismatches, any modification impacting database columns, API data payloads, or core parameter spelling conventions—specifically the mandated parameters `'Temparature'`, `'Humidity '`, and `'Phosphorous'`—shall require a formal change request. The modification escalation path requires:
-1.  **Validation:** The Data Specialist (Dr. Elena Rostova) must execute data science validation checks confirming that the proposed modification will not cause deserialization or model scoring failures.
-2.  **Review:** The Lead Architect (Muhammad Omer Siddiqui) must review the architectural impact of the change on the Django REST framework serializers and the Flutter mobile controllers.
-3.  **Sign-off:** The Project Sponsor must provide final written authorization and sign-off before changes are deployed to the production staging environment.
+1.  **Data Science Validation:** The Data & Machine Learning Specialist (Dr. Sarah Jenkins) shall execute the data science validation checks confirming that the proposed parameter or string-mapping modification will not break model scoring metrics.
+2.  **Serializer Schema Validation:** The Full-Stack Backend & Data Specialist (Dr. Elena Rostova) shall validate the Django framework serializer schemas to ensure schema alignment.
+3.  **Client-Side Controller Review:** The Lead Architect (Muhammad Omer Siddiqui) shall check the frontend Flutter controllers to ensure integration parity.
+4.  **Authorized Sign-off:** The Project Sponsor shall provide final written authorization and sign-off before the change is approved for staging deployment.
 
 ---
 
