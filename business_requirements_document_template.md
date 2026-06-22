@@ -47,7 +47,7 @@
 3. [System Features](#3-system-features)
    3.1. [Dual-Model Machine Learning Inference (Priority: Critical)](#31-dual-model-machine-learning-inference-priority-critical)
         3.1.1. [Description](#311-description)
-        3.1.2. [Stimulus/Response Sequences](#312-stimulusresponse-sequences)
+        3.1.2. [Stimulus/Response Sequences](#312-stimuluscallresponse-sequences)
         3.1.3. [Functional Requirements](#313-functional-requirements)
                3.1.3.1. [Use Cases](#3131-use-cases)
    3.2. [High-Availability Offline Fallback Engine (Priority: Critical)](#32-high-availability-offline-fallback-engine-priority-critical)
@@ -219,7 +219,7 @@ The following table summarizes the requirements listed in Section 3:
 ### 3.1. Dual-Model Machine Learning Inference (Priority: Critical)
 
 #### 3.1.1. Description
-Ingest soil parameters and generate crop classification outputs and fertilizer recommendations from pre-trained RandomForest models loaded at startup.
+The platform shall evaluate incoming soil chemical metrics and return crop suggestions and fertilizer mixture solutions. This feature relies on two pre-trained RandomForestClassifier models loaded at Django startup.
 
 #### 3.1.2. Stimulus/Response Sequences
 *   **User Action:** User inputs soil metrics (N, P, K, pH, moisture) and taps "Get Recommendation".
@@ -227,14 +227,36 @@ Ingest soil parameters and generate crop classification outputs and fertilizer r
 
 #### 3.1.3. Functional Requirements
 *   **REQ-ML-001: Soil Payload Validation**  
-    The backend shall reject any POST payload mapping variables outside typical agricultural limits (e.g., pH outside range 0-14, NPK outside range 0-300).
+    The backend shall reject any POST payload mapping variables outside typical agricultural limits:
+    *   Nitrogen (N) must be bounded between `0.0` and `140.0`.
+    *   Phosphorus (P) must be bounded between `0.0` and `145.0`.
+    *   Potassium (K) must be bounded between `0.0` and `205.0`.
+    *   Soil pH must be bounded between `0.0` and `14.0`.
+    *   Temperature must be bounded between `0.0` and `50.0`°C.
+    *   Humidity must be bounded between `0.0` and `100.0`%.
+    *   Rainfall must be bounded between `0.0` and `300.0` mm.
 *   **REQ-ML-002: Non-standard Parameter Mapping**  
-    The fertilizer parser shall bind variables utilizing literals: `'Temparature'`, `'Humidity '` (trailing space), and `'Phosphorous'`.
-*   **REQ-ML-003: Model Output Mapping**  
-    The system shall decode numerical prediction indexes back to string outputs mapped to the local vocabulary.
+    The fertilizer prediction endpoint (`/api/fertilizer/`) shall accept parameters using the exact strings:
+    *   `Temparature` (with 'a' in the second syllable)
+    *   `Humidity ` (with a trailing space character)
+    *   `Phosphorous` (with 'o' before 'u')
+*   **REQ-ML-003: Model Output Target Mapping**  
+    The system shall decode model prediction outputs using target encoders to map numeric classifications back to their human-readable strings (e.g. crop classification classes like `rice`, `maize`, or fertilizer formulas like `Urea`, `DAP`).
 
-##### Use Cases
-The following use case defines this feature's interaction sequence:
+##### Preconditions
+Model `.pkl` files must be loaded into system memory at startup.
+
+##### Postconditions
+Recommendation hash synced to the local SQLite DB and signed Web3 audit request sent to queue.
+
+##### Assumptions
+User inputs reflect valid chemical sensor readings.
+
+##### Risks
+Serializing format mismatch causing backend 500 error outputs.
+
+##### Exception Handling
+If model processing throws exceptions, return dynamic JSON status "failed" and log error logs.
 
 ##### 3.1.3.1. Use Cases
 
@@ -263,7 +285,7 @@ The following use case defines this feature's interaction sequence:
 ### 3.2. High-Availability Offline Fallback Engine (Priority: Critical)
 
 #### 3.2.1. Description
-Executes a deterministic rules engine natively on the mobile client if backend network requests time out.
+Executes a deterministic rules engine natively on the mobile client if backend network requests time out or fail.
 
 #### 3.2.2. Stimulus/Response Sequences
 *   **User Action:** User initiates weather tip lookup.
@@ -274,10 +296,26 @@ Executes a deterministic rules engine natively on the mobile client if backend n
     The client shell shall intercept HTTP timeouts in under 500ms and swap connection streams to the local logic block.
 *   **REQ-OF-002: Deterministic Rule Application**  
     The client logic shall output advice based on local thresholds:
-    *   Temp > 38°C -> watering = "Yes", fertilizer = "Wait", pest = "High".
-    *   Humidity > 80% -> watering = "No", fertilizer = "Wait", pest = "High".
+    *   Temp > 38°C -> watering = "Yes - Extreme heat!", fertilizer = "Wait - Heat causes burn", pest = "High - mites", tip = "Provide shade".
+    *   Humidity > 80% -> watering = "No", fertilizer = "Wait - risk of fungus", pest = "High - fungal risk", tip = "Ensure good air circulation".
+    *   Rain/Thunderstorm -> watering = "No", fertilizer = "Wait", pest = "Medium", tip = "Cover sensitive crops".
 *   **REQ-OF-003: UI Offline Banner Warning**  
     Renders a persistent, orange caution banner displaying the offline state.
+
+##### Preconditions
+Mobile location services must provide GPS coordinates.
+
+##### Postconditions
+Displays local rule-based warning metrics.
+
+##### Assumptions
+Meteorological variables can be queried locally.
+
+##### Risks
+Stale location parameters leading to outdated advice.
+
+##### Exception Handling
+If GPS values are missing, use default coordinates for Islamabad.
 
 ##### 3.2.3.1. Use Cases
 
@@ -325,10 +363,13 @@ Executes a deterministic rules engine natively on the mobile client if backend n
 *   **OpenWeatherMap API:** Retrieves real-time local temperature and weather metrics.
 *   **Google Gemini 2.0 Flash:** Receives weather data to generate farming tips. The parser enforces the following format:
     ```text
-    💧 WATERING: (Yes/No) - (Reason)
-    🌱 FERTILIZER: (Good/Wait) - (Reason)
-    🐛 PEST RISK: (Low/Medium/High) - (Reason)
-    ✅ TIP: (Advice)
+    You are an agricultural expert advising a farmer in {location} growing {crop_type or 'crops'}.
+    Weather: {temp}°C, {humidity}% humidity, {conditions}, wind {wind_speed} m/s.
+    Give VERY SHORT advice in EXACT format:
+    💧 WATERING: (Yes/No) - (4-5 words reason)
+    🌱 FERTILIZER: (Good/Wait) - (4-5 words reason)
+    🐛 PEST RISK: (Low/Medium/High) - (3-4 words)
+    ✅ TIP: (one 5-8 word sentence)
     ```
 
 ### 4.4. Communications Interfaces
