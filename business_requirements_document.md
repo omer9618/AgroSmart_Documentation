@@ -1,23 +1,25 @@
-# Stanford University Administrative Systems Business Requirements Document
-## Project Name: AgroSmart (Enterprise Agricultural Intelligence Platform)
-**DOCUMENT VERSION:** 1.0  
-**AUTHORS:** Muhammad Omer Siddiqui (Engagement Director & Lead Architect)  
+# Stanford University Administrative Systems
+## Business Requirements Document
+
+**Project Name:** AgroSmart (Enterprise Agricultural Intelligence Platform)  
+**Document Version:** 1.0  
+**Date:** 06/22/2026  
 
 ---
 
-### AUTHORS
+### Authors
 | Name | Role | Department |
 | :--- | :--- | :--- |
 | Muhammad Omer Siddiqui | Engagement Director & Lead Architect | Core Architecture & Management |
 | Dr. Elena Rostova | Full-Stack Backend & Data Specialist | Backend Engineering |
 | Tariq Mahmood | Frontend Mobile & QA Specialist | Mobile UI/UX & Testing |
 
-### DOCUMENT HISTORY
+### Document History
 | Date | Version | Document Revision Description | Document Author |
 | :--- | :--- | :--- | :--- |
 | 06/22/2026 | 1.0 | Initial Scope Baseline & Core Requirements Definition | Muhammad Omer Siddiqui |
 
-### APPROVALS
+### Approvals
 | Approval Date | Approved Version | Approver Role | Approver |
 | :--- | :--- | :--- | :--- |
 | 06/22/2026 | 1.0 | Project Sponsor | Client Venture Team |
@@ -26,62 +28,82 @@
 ---
 
 ## Contents
-1. Introduction
-   1.1. Purpose of the Document
-   1.2. Document Conventions, Terms, and Definitions
-   1.3. Intended Audience and Reading Suggestions
-   1.4. Scope
-      1.4.1. Project Scope
-      1.4.2. Business Requirement Document Scope
-   1.5. References
-2. Overall Description
-   2.1. Project Overview
-   2.2. Product Features
-   2.3. User Classes and Characteristics
-   2.4. Operating Environment
-   2.5. Design and Implementation Constraints
-   2.6. User Documentation
-   2.7. Assumptions, Dependencies, and Risks
-3. System Features
-   3.1. Dual-Model Machine Learning Inference (Priority: Critical)
-      3.1.1. Description
-      3.1.2. Stimulus/Response Sequences
-      3.1.3. Functional Requirements
-         3.1.3.1. Use Cases
-   3.2. High-Availability Offline Fallback Engine (Priority: Critical)
-      3.2.1. Description
-      3.2.2. Stimulus/Response Sequences
-      3.2.3. Functional Requirements
-         3.2.3.1. Use Cases
-4. External Interface Requirements
-   4.1. User Interface
-   4.2. Hardware Interfaces
-   4.3. Software Interfaces
-   4.4. Communications Interfaces
-   4.5. Reporting Requirements
-5. Other Nonfunctional Requirements
-   5.1. Performance Requirements
-   5.2. Security Requirements
-   5.3. Data Requirements
-   5.4. Software Quality Attributes
-6. Other Requirements
-7. Campus Readiness and Training
-*   Appendix A: Glossary
-*   Appendix B: Analysis Models
-*   Appendix C: Issues List
-*   Appendix D: Screenshots, Mock-Ups, and Live Links
-*   Appendix E: Test Scenarios
+1. [Introduction](#1-introduction)
+   1.1. [Purpose of the Document](#11-purpose-of-the-document)
+   1.2. [Document Conventions, Terms, and Definitions](#12-document-conventions-terms-and-definitions)
+   1.3. [Intended Audience and Reading Suggestions](#13-intended-audience-and-reading-suggestions)
+   1.4. [Scope](#14-scope)
+        1.4.1. [Project Scope](#141-project-scope)
+        1.4.2. [Business Requirement Document Scope](#142-business-requirement-document-scope)
+   1.5. [References](#15-references)
+2. [Overall Description](#2-overall-description)
+   2.1. [Project Overview](#21-project-overview)
+   2.2. [Product Features](#22-product-features)
+   2.3. [User Classes and Characteristics](#23-user-classes-and-characteristics)
+   2.4. [Operating Environment](#24-operating-environment)
+   2.5. [Design and Implementation Constraints](#25-design-and-implementation-constraints)
+   2.6. [User Documentation](#26-user-documentation)
+   2.7. [Assumptions, Dependencies, and Risks](#27-assumptions-dependencies-and-risks)
+3. [System Features](#3-system-features)
+   3.1. [Dual-Model Machine Learning Inference (Priority: Critical)](#31-dual-model-machine-learning-inference-priority-critical)
+        3.1.1. [Description](#311-description)
+        3.1.2. [Stimulus/Response Sequences](#312-stimulusresponse-sequences)
+        3.1.3. [Functional Requirements](#313-functional-requirements)
+               3.1.3.1. [Use Cases](#3131-use-cases)
+   3.2. [High-Availability Offline Fallback Engine (Priority: Critical)](#32-high-availability-offline-fallback-engine-priority-critical)
+        3.2.1. [Description](#321-description)
+        3.2.2. [Stimulus/Response Sequences](#322-stimuluscallresponse-sequences)
+        3.2.3. [Functional Requirements](#323-functional-requirements)
+               3.2.3.1. [Use Cases](#3231-use-cases)
+   3.3. [Fuzzy-Text Pesticide Knowledge Lookup (Priority: High)](#33-fuzzy-text-pesticide-knowledge-lookup-priority-high)
+        3.3.1. [Description](#331-description)
+        3.3.2. [Stimulus/Response Sequences](#332-stimulusresponse-sequences)
+        3.3.3. [Functional Requirements](#333-functional-requirements)
+               3.3.3.1. [Use Cases](#3331-use-cases)
+   3.4. [Local SQLite Caching and History Synchronization (Priority: High)](#34-local-sqlite-caching-and-history-synchronization-priority-high)
+        3.4.1. [Description](#341-description)
+        3.4.2. [Stimulus/Response Sequences](#342-stimulusresponse-sequences)
+        3.4.3. [Functional Requirements](#343-functional-requirements)
+               3.4.3.1. [Use Cases](#3431-use-cases)
+   3.5. [Firebase User Authentication and Session Security (Priority: Critical)](#35-firebase-user-authentication-and-session-security-priority-critical)
+        3.5.1. [Description](#351-description)
+        3.5.2. [Stimulus/Response Sequences](#352-stimuluscallresponse-sequences)
+        3.5.3. [Functional Requirements](#353-functional-requirements)
+               3.5.3.1. [Use Cases](#3531-use-cases)
+   3.6. [Dynamic Location-Based Weather Advisory Dashboard (Priority: High)](#36-dynamic-location-based-weather-advisory-dashboard-priority-high)
+        3.6.1. [Description](#361-description)
+        3.6.2. [Stimulus/Response Sequences](#362-stimuluscallresponse-sequences)
+        3.6.3. [Functional Requirements](#363-functional-requirements)
+               3.6.3.1. [Use Cases](#3631-use-cases)
+4. [External Interface Requirements](#4-external-interface-requirements)
+   4.1. [User Interface](#41-user-interface)
+   4.2. [Hardware Interfaces](#42-hardware-interfaces)
+   4.3. [Software Interfaces](#43-software-interfaces)
+   4.4. [Communications Interfaces](#44-communications-interfaces)
+   4.5. [Reporting Requirements](#45-reporting-requirements)
+5. [Other Nonfunctional Requirements](#5-other-nonfunctional-requirements)
+   5.1. [Performance Requirements](#51-performance-requirements)
+   5.2. [Security Requirements](#52-security-requirements)
+   5.3. [Data Requirements](#53-data-requirements)
+   5.4. [Software Quality Attributes](#54-software-quality-attributes)
+6. [Other Requirements](#6-other-requirements)
+7. [Campus Readiness and Training](#7-campus-readiness-and-training)
+* [Appendix A: Glossary](#appendix-a-glossary)
+* [Appendix B: Analysis Models](#appendix-b-analysis-models)
+* [Appendix C: Issues List](#appendix-c-issues-list)
+* [Appendix D: Screenshots, Mock-Ups, and Live Links](#appendix-d-screenshots-mock-ups-and-live-links)
+* [Appendix E: Test Scenarios](#appendix-e-test-scenarios)
 
 ---
 
 ## 1. Introduction
 
 ### 1.1. Purpose of the Document
-The purpose of this Business Requirements Document (BRD) is to establish the formal, legally binding functional and non-functional specifications contract for the **AgroSmart** platform. This document bridges business needs and software implementation prior to source code creation.
+The purpose of this Business Requirements Document (BRD) is to establish a rigorous, legally and technically binding contract defining the functional, non-functional, and interface requirements for the **AgroSmart Enterprise Agricultural Intelligence Platform**. 
 
-The core business need is mitigating critical regional crop yield deficits and unscientific chemical over-application. Many agricultural systems rely on subjective visual inspections or legacy habits. This guesswork leads to soil acidification, nutrient runoff, and crop failure. 
+Regional crop yields are severely impacted by unscientific farming, erratic fertilizer application, and a lack of real-time diagnostic tools. This unscientific approach leads to soil acidification, chemical over-application, and crop failure. The AgroSmart platform aims to mitigate these risks by providing an integrated, client-server agricultural intelligence framework. This framework consists of a cross-platform Flutter mobile client and a Python Django REST API backend. It delivers localized, data-driven soil analyses, crop predictions, pesticide recommendations, and real-time weather tips.
 
-To mitigate these risks, the AgroSmart platform implements a client-server agricultural intelligence framework. This includes a cross-platform mobile client built using Flutter and a Python Django REST API backend. The platform provides data-driven soil analyses, crop recommendations, pesticide lookup, and real-time weather tips.
+This document translates business goals, user profiles, and architectural constraints into concrete specifications. Under the ISO 21502:2020 compliance guidelines, it serves as the definitive technical contract. It must be approved by all stakeholders prior to the commencement of source code construction or database schema initialization. All software features, APIs, and components will be verified and validated against the requirements defined herein.
 
 ### 1.2. Document Conventions, Terms, and Definitions
 *   **Typography:** The word **shall** denotes a binding, mandatory requirement. The word **will** indicates a future or projected system behavior. Standard font weights and headers differentiate components.
@@ -211,13 +233,23 @@ The following table summarizes the requirements listed in Section 3:
 | Offline Fallback | REQ-OF-001 | Latency Interceptor and Failover | #4 |
 | Offline Fallback | REQ-OF-002 | Local Weather Threshold Calculation | #5 |
 | Offline Fallback | REQ-OF-003 | Persistent Offline Visual Warning Banner | #6 |
+| Pesticide Lookup | REQ-PE-001 | Fuzzy Symptom Keyword Lookup Search | #7 |
+| Pesticide Lookup | REQ-PE-002 | Default Organic Neem Oil Fallback | #8 |
+| Local Database | REQ-DB-001 | Automatic Database Local Logging | #9 |
+| Local Database | REQ-DB-002 | Categorical Tag Query Filtering | #10 |
+| Local Database | REQ-DB-003 | Historical Entry Deletion | #11 |
+| User Session | REQ-AU-001 | Firebase Authentication and Password Severity | #12 |
+| User Session | REQ-AU-002 | Local Session Persistence and Auto-Login | #13 |
+| Weather Tips | REQ-WE-001 | Geolocator Coordinates Tracking | #14 |
+| Weather Tips | REQ-WE-002 | GPS Signal Loss Islamabad Default Fallback | #15 |
+| Weather Tips | REQ-WE-003 | Gemini 2.0 Flash Advisory Response Schema Parsing | #16 |
 
 ---
 
 ### 3.1. Dual-Model Machine Learning Inference (Priority: Critical)
 
 #### 3.1.1. Description
-Ingest soil parameters and generate crop classification outputs and fertilizer recommendations from pre-trained RandomForest models loaded at startup.
+The platform shall evaluate incoming soil chemical metrics and return crop suggestions and fertilizer mixture solutions. This feature relies on two pre-trained RandomForestClassifier models loaded at Django startup.
 
 #### 3.1.2. Stimulus/Response Sequences
 *   **User Action:** User inputs soil metrics (N, P, K, pH, moisture) and taps "Get Recommendation".
@@ -225,30 +257,25 @@ Ingest soil parameters and generate crop classification outputs and fertilizer r
 
 #### 3.1.3. Functional Requirements
 *   **REQ-ML-001: Soil Payload Validation**  
-    The backend shall reject any POST payload mapping variables outside typical agricultural limits (e.g., pH outside range 0-14, NPK outside range 0-300).
+    The backend shall reject any POST payload mapping variables outside typical agricultural limits:
+    *   Nitrogen (N) must be bounded between `0.0` and `140.0`.
+    *   Phosphorus (P) must be bounded between `0.0` and `145.0`.
+    *   Potassium (K) must be bounded between `0.0` and `205.0`.
+    *   Soil pH must be bounded between `0.0` and `14.0`.
+    *   Temperature must be bounded between `0.0` and `50.0`°C.
+    *   Humidity must be bounded between `0.0` and `100.0`%.
+    *   Rainfall must be bounded between `0.0` and `300.0` mm.
 *   **REQ-ML-002: Non-standard Parameter Mapping**  
-    The fertilizer parser shall bind variables utilizing literals: `'Temparature'`, `'Humidity '` (trailing space), and `'Phosphorous'`.
-*   **REQ-ML-003: Model Output Mapping**  
-    The system shall decode numerical prediction indexes back to string outputs mapped to the local vocabulary.
+    The fertilizer prediction endpoint (`/api/fertilizer/`) shall accept parameters using the exact strings:
+    *   `Temparature` (with 'a' in the second syllable)
+    *   `Humidity ` (with a trailing space character)
+    *   `Phosphorous` (with 'o' before 'u')
+*   **REQ-ML-003: Model Output Target Mapping**  
+    The system shall decode model prediction outputs using target encoders to map numeric classifications back to their human-readable strings (e.g. crop classification classes like `rice`, `maize`, or fertilizer formulas like `Urea`, `DAP`).
 
-##### Preconditions
-Model `.pkl` files must be loaded into system memory.
+##### 3.1.3.1. Use Cases
 
-##### Postconditions
-Recommendation hash synced to the local SQLite DB.
-
-##### Assumptions
-User inputs reflect valid chemical sensor readings.
-
-##### Risks
-Serializing format mismatch causing backend 500 error outputs.
-
-##### Exception Handling
-If model processing throws exceptions, return dynamic JSON status "failed" and log error logs.
-
-#### 3.1.3.1. Use Cases
-
-| Field | Description |
+| Field | Description / Value |
 | :--- | :--- |
 | **Use Case ID** | UC-ML-001 |
 | **Use Case Name** | Predictive Soil Recommendation |
@@ -273,7 +300,7 @@ If model processing throws exceptions, return dynamic JSON status "failed" and l
 ### 3.2. High-Availability Offline Fallback Engine (Priority: Critical)
 
 #### 3.2.1. Description
-Executes a deterministic rules engine natively on the mobile client if backend network requests time out.
+Executes a deterministic rules engine natively on the mobile client if backend network requests time out or fail.
 
 #### 3.2.2. Stimulus/Response Sequences
 *   **User Action:** User initiates weather tip lookup.
@@ -284,29 +311,15 @@ Executes a deterministic rules engine natively on the mobile client if backend n
     The client shell shall intercept HTTP timeouts in under 500ms and swap connection streams to the local logic block.
 *   **REQ-OF-002: Deterministic Rule Application**  
     The client logic shall output advice based on local thresholds:
-    *   Temp > 38°C -> watering = "Yes", fertilizer = "Wait", pest = "High".
-    *   Humidity > 80% -> watering = "No", fertilizer = "Wait", pest = "High".
+    *   Temp > 38°C -> watering = "Yes - Extreme heat!", fertilizer = "Wait - Heat causes burn", pest = "High - mites", tip = "Provide shade".
+    *   Humidity > 80% -> watering = "No", fertilizer = "Wait - risk of fungus", pest = "High - fungal risk", tip = "Ensure good air circulation".
+    *   Rain/Thunderstorm -> watering = "No", fertilizer = "Wait", pest = "Medium", tip = "Cover sensitive crops".
 *   **REQ-OF-003: UI Offline Banner Warning**  
     Renders a persistent, orange caution banner displaying the offline state.
 
-##### Preconditions
-Mobile location services must provide GPS coordinates.
+##### 3.2.3.1. Use Cases
 
-##### Postconditions
-Displays local rule-based warning metrics.
-
-##### Assumptions
-Meteorological variables can be queried locally.
-
-##### Risks
-Stale location parameters leading to outdated advice.
-
-##### Exception Handling
-If GPS values are missing, use default coordinates for Islamabad.
-
-#### 3.2.3.1. Use Cases
-
-| Field | Description |
+| Field | Description / Value |
 | :--- | :--- |
 | **Use Case ID** | UC-OF-001 |
 | **Use Case Name** | Local Weather Fallback Processing |
@@ -325,6 +338,170 @@ If GPS values are missing, use default coordinates for Islamabad.
 | **Special Requirements**| Displays a persistent offline status warning. |
 | **Assumptions** | Offline rules reflect safe regional agricultural practices. |
 | **Notes and Issues** | Rule thresholds align with regional crop requirements. |
+
+---
+
+### 3.3. Fuzzy-Text Pesticide Knowledge Lookup (Priority: High)
+
+#### 3.3.1. Description
+Provides localized diagnostic matches by parsing user symptom descriptions against a disease lookup table using fuzzy keyword matching.
+
+#### 3.3.2. Stimulus/Response Sequences
+*   **User Action:** User enters the target crop name (e.g. `rice`) and a symptom description (e.g. `leaves have brown spots`) and taps "Get Treatment".
+*   **System Response:** System compares description against active symptom keywords, extracts matching entries, and returns dosage and application details.
+
+#### 3.3.3. Functional Requirements
+*   **REQ-PE-001: Fuzzy Keyword Parsing**  
+    The system shall evaluate symptom descriptions using fuzzy matching against target disease keywords (including `blast`, `brown spot`, `stem borer`, `leaf folder`, `rust`, `mildew`, `armyworm`, `bollworm`, `whitefly`, `aphid`, `leaf miner`, `fruit borer`).
+*   **REQ-PE-002: Organic Treatment Fallback Defaults**  
+    If the symptom description does not match any keyword in the database, the system shall default to returning a standardized organic Neem Oil treatment regimen (dosage: `5ml per liter water`, frequency: `every 7 days`).
+
+##### 3.3.3.1. Use Cases
+
+| Field | Description / Value |
+| :--- | :--- |
+| **Use Case ID** | UC-PE-001 |
+| **Use Case Name** | Fuzzy Pesticide Search |
+| **Actors** | Rural Farmer |
+| **Description** | Finds treatment recommendations for crop diseases. |
+| **Trigger** | Farmer submits crop and symptom descriptions. |
+| **Preconditions** | Selected crop matches one of the autocomplete options. |
+| **Postconditions** | Returns chemical or organic treatment instructions. |
+| **Normal Flow** | 1. User selects crop name (e.g., `tomato`).<br>2. User types symptoms (e.g., `leaves show white powder`).<br>3. System maps input to generic categories (e.g., tomato -> vegetable).<br>4. System matches `white powder` to `powdery mildew` keyword.<br>5. Returns target pesticide formulation and application instructions. |
+| **Alternative Flow** | *Alternative Flow A (No Keyword Match):* System defaults to returning organic Neem Oil fallback instructions. |
+| **Exceptions** | Empty crop name or symptoms block submission. |
+| **Includes** | Local Database Cache Sync |
+| **Priority** | High |
+| **Frequency of Use** | As-needed during pest outbreaks |
+| **Business Rules** | Vegetables (tomato, potato, brinjal, chili, onion) map to a generic "vegetable" database index. |
+| **Special Requirements**| UI must support autocomplete crop selection. |
+| **Assumptions** | Farmer can identify visual symptoms of the crop. |
+| **Notes and Issues** | Defaults are organic to avoid chemical over-application. |
+
+---
+
+### 3.4. Local SQLite Caching and History Synchronization (Priority: High)
+
+#### 3.4.1. Description
+Provides offline data accessibility by automatically caching user diagnostic parameters and recommendation reports into a client-side SQLite database.
+
+#### 3.4.2. Stimulus/Response Sequences
+*   **User Action:** User views a successful recommendation result.
+*   **System Response:** System automatically executes a background database write to store the query inputs and result outputs in the local cache, updating the history badge count.
+
+#### 3.4.3. Functional Requirements
+*   **REQ-DB-001: Automatic Local Database Cache**  
+    The mobile client shall save all query variables and output recommendations to the local SQLite database immediately upon receipt of a successful server response.
+*   **REQ-DB-002: Categorical and Keyword Filtering**  
+    The History Screen shall support local keyword searching (e.g., filtering logs by crop name) and categorical filter chips (Crops, Fertilizers, Pesticides, Weather).
+*   **REQ-DB-003: History Record Deletion**  
+    The application shall support swipe-to-delete gestures on history cards, removing records from database storage and updating the cache list.
+
+##### 3.4.3.1. Use Cases
+
+| Field | Description / Value |
+| :--- | :--- |
+| **Use Case ID** | UC-DB-001 |
+| **Use Case Name** | Historical Log Verification |
+| **Actors** | Rural Farmer, Scientific Inspector |
+| **Description** | Reviews past diagnostic logs cached on the mobile device. |
+| **Trigger** | Taps the History icon in the dashboard. |
+| **Preconditions** | SQLite file is active on device storage. |
+| **Postconditions** | Lists historical advice cards. |
+| **Normal Flow** | 1. User navigates to History Screen.<br>2. SQLite query loads saved records.<br>3. User applies the "Fertilizer" category chip.<br>4. List filters to display only fertilizer queries.<br>5. User taps a record to expand input/output details. |
+| **Alternative Flow** | *Alternative Flow A (Log Deletion):* User swipes left on a log card; system deletes the record and updates the list. |
+| **Exceptions** | Database read locks are handled gracefully. |
+| **Includes** | None |
+| **Priority** | High |
+| **Frequency of Use** | Multiple times daily |
+| **Business Rules** | Swipe-to-delete deletes data permanently from local storage. |
+| **Special Requirements**| Deletion must sync dynamically with the home page badge count. |
+| **Assumptions** | Local SQLite file database has read/write permissions. |
+| **Notes and Issues** | Cached records persist even if the app cache is cleared. |
+
+---
+
+### 3.5. Firebase User Authentication and Session Security (Priority: Critical)
+
+#### 3.5.1. Description
+Secures user data and diagnostic histories by forcing user registration and session verification before enabling cloud features.
+
+#### 3.5.2. Stimulus/Response Sequences
+*   **User Action:** User inputs credentials and taps "Login".
+*   **System Response:** System validates parameters, sends request to Firebase Authentication, verifies the token, caches session keys, and routes the user to the home dashboard.
+
+#### 3.5.3. Functional Requirements
+*   **REQ-AU-001: Firebase Authentication Integration**  
+    The application shall handle registration and logins using the Firebase Authentication SDK. Sign-up forms must enforce strong password rules:
+    *   Minimum length: 8 characters.
+    *   At least one uppercase letter.
+    *   At least one numeric digit.
+    *   At least one special character (`!@#$%^&*`).
+*   **REQ-AU-002: Persistent Session and Auto-Login Caching**  
+    The system shall save authentication tokens locally. On launch, the splash screen will check token validity, bypassing the login portal for active sessions.
+
+##### 3.5.3.1. Use Cases
+
+| Field | Description / Value |
+| :--- | :--- |
+| **Use Case ID** | UC-AU-001 |
+| **Use Case Name** | Farmer Account Login |
+| **Actors** | Rural Farmer |
+| **Description** | Logs user into the app using email and password. |
+| **Trigger** | User submits the Login form. |
+| **Preconditions** | Device has an active internet connection. |
+| **Postconditions** | Caches session token; grants app access. |
+| **Normal Flow** | 1. User inputs email and password.<br>2. System validates input formats.<br>3. Request is sent to Firebase.<br>4. Firebase validates credentials and returns a session token.<br>5. App stores session token locally and opens the Dashboard. |
+| **Alternative Flow** | *Alternative Flow A (Offline Login attempt):* System blocks execution and displays a message prompting the user to connect to the internet. |
+| **Exceptions** | Invalid password format displays inline errors. |
+| **Includes** | None |
+| **Priority** | Critical |
+| **Frequency of Use** | Daily |
+| **Business Rules** | Session token expiration must force a redirection to the Login Screen. |
+| **Special Requirements**| Login form must use non-resizing root layouts to prevent keyboard overlap. |
+| **Assumptions** | Firebase services are accessible in the region. |
+| **Notes and Issues** | Password complexity limits are validated client-side. |
+
+---
+
+### 3.6. Dynamic Location-Based Weather Advisory Dashboard (Priority: High)
+
+#### 3.6.1. Description
+Integrates local weather coordinates with generative AI prompts to supply dynamic, weather-based farming instructions.
+
+#### 3.6.2. Stimulus/Response Sequences
+*   **User Action:** User selects "Use GPS Location" and taps "Get Weather Tips".
+*   **System Response:** System reads coordinates from the GPS receiver, calls OpenWeatherMap, compiles weather values, runs Google Gemini advice generation, and displays the structured outputs.
+
+#### 3.6.3. Functional Requirements
+*   **REQ-WE-001: GPS Location Sourcing**  
+    The client app shall request location permissions and query the device GPS to retrieve current latitude and longitude coordinates.
+*   **REQ-WE-002: GPS Signal Loss Default Fallback**  
+    If the device GPS is unavailable or permissions are denied, the system shall fallback to using default coordinates for Islamabad (`33.6844, 73.0479`) and allow manual latitude and longitude entry.
+*   **REQ-WE-003: Gemini Advice Prompt and Schema Parsing**  
+    The backend shall compile coordinates, query OpenWeatherMap, and structure a prompt for Google Gemini 2.0 Flash. The API response must be parsed and mapped to four specific sections: `💧 WATERING`, `🌱 FERTILIZER`, `🐛 PEST RISK`, and `✅ TIP`.
+
+##### 3.6.3.1. Use Cases
+
+| Field | Description / Value |
+| :--- | :--- |
+| **Use Case ID** | UC-WE-001 |
+| **Use Case Name** | Weather AI Advisory Sourcing |
+| **Actors** | Rural Farmer |
+| **Description** | Generates AI farming tips using live weather data. |
+| **Trigger** | Farmer taps "Get Weather Tips". |
+| **Preconditions** | Selected crop field is optionally filled. |
+| **Postconditions** | Renders parsed weather dashboard. |
+| **Normal Flow** | 1. User selects weather diagnostic tool.<br>2. App queries GPS and returns coordinates.<br>3. Server queries OpenWeatherMap with coordinates.<br>4. Weather metrics are compiled and sent to Gemini.<br>5. Response is parsed and rendered in the dashboard. |
+| **Alternative Flow** | *Alternative Flow A (Manual Entry):* Farmer manually enters coordinates or selects from quick-select city buttons. |
+| **Exceptions** | If weather API limits are reached, the system triggers deterministic offline rules. |
+| **Includes** | Local Database Cache Sync |
+| **Priority** | High |
+| **Frequency of Use** | Daily |
+| **Business Rules** | Response format must strictly follow the 4-tier schema. |
+| **Special Requirements**| Visual widgets must adapt dynamically based on local weather conditions. |
+| **Assumptions** | Active API keys are configured on the server. |
+| **Notes and Issues** | Fallbacks ensure utility even in regions with poor connectivity. |
 
 ---
 
@@ -350,10 +527,13 @@ If GPS values are missing, use default coordinates for Islamabad.
 *   **OpenWeatherMap API:** Retrieves real-time local temperature and weather metrics.
 *   **Google Gemini 2.0 Flash:** Receives weather data to generate farming tips. The parser enforces the following format:
     ```text
-    💧 WATERING: (Yes/No) - (Reason)
-    🌱 FERTILIZER: (Good/Wait) - (Reason)
-    🐛 PEST RISK: (Low/Medium/High) - (Reason)
-    ✅ TIP: (Advice)
+    You are an agricultural expert advising a farmer in {location} growing {crop_type or 'crops'}.
+    Weather: {temp}°C, {humidity}% humidity, {conditions}, wind {wind_speed} m/s.
+    Give VERY SHORT advice in EXACT format:
+    💧 WATERING: (Yes/No) - (4-5 words reason)
+    🌱 FERTILIZER: (Good/Wait) - (4-5 words reason)
+    🐛 PEST RISK: (Low/Medium/High) - (3-4 words)
+    ✅ TIP: (one 5-8 word sentence)
     ```
 
 ### 4.4. Communications Interfaces
@@ -420,16 +600,14 @@ To prevent validation exceptions and schema mismatches between client forms, dat
 
 ---
 
-## Appendices
-
-### Appendix A: Glossary
+## Appendix A: Glossary
 *   **API:** Application Programming Interface.
 *   **BRD:** Business Requirements Document.
 *   **CapEx:** Capital Expenditure.
 *   **ML:** Machine Learning.
 *   **NPK:** Nitrogen, Phosphorus, Potassium.
 
-### Appendix B: Data Flow Model
+## Appendix B: Analysis Models
 
 ```text
 +-----------------------+         Inputs Soil Data         +-----------------------+
@@ -439,7 +617,7 @@ To prevent validation exceptions and schema mismatches between client forms, dat
      |             | Caches Queries                             |             | Runs Models
      |             v                                            v             v
 +-----------------------+                                  +-----------------------+
-|   Local SQLite DB     |                                  | RandomForest Classifer|
+|   Local SQLite DB     |                                  | RandomForest Classifier|
 +-----------------------+                                  +-----------------------+
                                                                 |
                                                                 | Logs Audits (Celery)
@@ -455,18 +633,18 @@ To prevent validation exceptions and schema mismatches between client forms, dat
                                                            +-----------------------+
 ```
 
-### Appendix C: Issues List
+## Appendix C: Issues List
 *   **Data Ingestion Typos:** The pre-trained fertilizer prediction model was trained on dataset columns containing minor typographical errors. To ensure model compatibility, front-end inputs and database schemas must match these typos:
     *   `Temparature` (misspelled)
     *   `Humidity ` (trailing space)
     *   `Phosphorous` (misspelled)
 
-### Appendix D: Screenshots, Mock-Ups, and Live Links
+## Appendix D: Screenshots, Mock-Ups, and Live Links
 *   **Login Mock-Up:** A glassmorphism container card overlaying a looping ambient video background.
 *   **Dashboard Mock-Up:** A profile header banner showing farmer stats, followed by a grid layout of service buttons.
 *   **Diagnosis Mock-Up:** Clean numeric form inputs accompanied by a top guide banner listing safe ranges.
 
-### Appendix E: Test Scenarios
+## Appendix E: Test Scenarios
 1.  **Model Serialization Validation Test:** Verify that the backend API loads the crop and fertilizer `.pkl` models at startup and runs inference without raising serializing exceptions.
 2.  **Network Drop Timeout Test:** Simulate network dropouts during weather requests and verify that the client triggers the local fallback engine in under 500ms.
 3.  **Typo Input Preservation Test:** Verify that the `/api/fertilizer/` endpoint processes requests containing the non-standard fields (`Temparature`, `Humidity `, and `Phosphorous`) without returning validation errors.
