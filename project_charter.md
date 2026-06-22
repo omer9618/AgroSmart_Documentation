@@ -63,10 +63,14 @@ Describe the expected benefits of the project:
 ### 5. Project Risks & Proactive Mitigations
 | Risk Identifier | Risk Description | Engineering Mitigation Strategy |
 | :--- | :--- | :--- |
-| **Risk 1** | Typographical Alignment between Datasets and Serializers causing key-mapping runtime crashes. | Enforce strict backend serializer schema validation that maps incoming payloads exactly to model properties. |
-| **Risk 2** | Volatile rural network signals causing API connection drops in remote regions. | Implement a client-side deterministic fallback engine that executes offline threshold algorithms. |
-| **Risk 3** | Third-party API rate limitations or quota exhaustion on live LLM endpoints. | Design an automated server-side exception routine to downgrade queries to local rules without UI disruption. |
-| **Risk 4** | Ethereum block validation delays causing REST API execution timeouts. | Route smart contract write operations to background asynchronous workers to keep API response times immediate. |
+| **Risk 1** | Typographical Alignment between Datasets and Serializers causing key-mapping runtime crashes during parameter processing. | Enforce strict backend serializer schema validation that maps incoming payloads exactly to model properties, matching dataset spellings. |
+| **Risk 2** | Volatile rural network signals causing API connection drops in remote regions and preventing database synchronization. | Implement a client-side deterministic fallback engine in the mobile application that executes offline threshold algorithms using local data. |
+| **Risk 3** | Third-party API rate limitations or quota exhaustion on live LLM endpoints resulting in advice failure. | Design an automated server-side exception routine to downgrade queries to local rules without UI disruption. |
+| **Risk 4** | Ethereum block validation delays causing REST API execution timeouts on the transaction thread. | Route smart contract write operations to background asynchronous workers to keep API response times immediate. |
+| **Risk 5** | Authentication Session Expirations and Sync Desynchronization due to sudden network loss in field operations. | Implement secure client-side storage to cache authentication state, combined with local request queue buffers that defer synchronization. |
+| **Risk 6** | Local Relational Database Schema Upgrades causing tables conflict or data loss when modifying existing structures. | Enforce strict migration procedures in the local database initializer class, running transaction-safe commands to verify schema updates. |
+| **Risk 7** | Long-Term Predictive Model Drift and performance decay due to shifting local climate and soil factors. | Build a modular server framework to support zero-downtime classification model swaps, requiring automated evaluation before staging. |
+| **Risk 8** | Generative AI Output Formatting Deviations breaking backend parsers when third-party parameters shift. | Deploy strict regular expression and JSON structure verification layers to intercept and format AI output strings. |
 
 ---
 
