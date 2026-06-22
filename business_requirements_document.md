@@ -12,7 +12,7 @@ This Business Requirements Document (BRD) defines the formal, legally binding fu
 #### 1.2 Enterprise Business Context
 The primary strategic goal of the AgroSmart platform is to resolve the macroeconomic crop yield inefficiencies, soil degradation crises, and resource-allocation deficits that impact regional and smallholder farming portfolios. In modern agricultural systems, the lack of accessible, quantitative diagnostic tools forces farmers to make planting and fertilization decisions based on subjective human intuition or outdated legacy patterns. This results in erratic chemical application, soil acidification, environmental run-off, and crop failure. 
 
-To mitigate these systemic operational risks, the planned platform will deploy an integrated client-server agricultural intelligence solution. The system will features a high-performance Python Django REST API backend and a cross-platform mobile client built using Flutter to deliver localized, data-driven soil analyses, predictive crop advice, and AI-enabled meteorological tips directly in the field.
+To mitigate these systemic operational risks, the planned platform will deploy an integrated client-server agricultural intelligence solution. The system will feature a high-performance Python Django REST API backend and a cross-platform mobile client built using Flutter to deliver localized, data-driven soil analyses, predictive crop advice, and AI-enabled meteorological tips directly in the field.
 
 #### 1.3 Resource Governance & Funded Tier Structure
 The platform shall be built and deployed under a strict, fixed Capital Expenditure (CapEx) threshold of $35,000. Under the governance guidelines of ISO 21502, project resource management is divided into a three-tier structure:
@@ -23,14 +23,13 @@ The platform shall be built and deployed under a strict, fixed Capital Expenditu
 ---
 
 ### 2.0 User Profiles & Demographic Constraints
-
 The planned platform must support two distinct user classes with contrasting technical capabilities and data governance mandates.
 
 #### 2.1 Rural Farmers (End Users)
 *   **Demographic Profile & Constraints:**  
-    This user group is characterized by low digital and smartphone literacy, severe budget constraints regarding cellular data traffic, and primary communication reliance on local languages (Urdu). Farmers operate in remote geographic sectors where cellular signals are volatile or entirely unavailable.
+    This user group is characterized by limited digital and smartphone literacy, severe budget constraints regarding cellular data traffic, and primary communication reliance on local languages (Urdu). Farmers operate in remote geographic sectors where cellular signals are volatile or entirely unavailable.
 *   **System Usability Mandates:**  
-    The client-side mobile application must employ a highly accessible, visual interface that utilizes intuitive iconographies, prominent buttons, and glassmorphism layouts to focus user attention. The system must support instant English and Urdu translation string matrices resolved natively on the device hardware to ensure zero latency when changing locales. Additionally, to protect users from cellular data depletion and connectivity dropouts, the mobile application must execute a client-side deterministic fallback engine that computes diagnostics locally without active cloud connections.
+    The client-side mobile application must employ a highly accessible, visual interface that utilizes intuitive iconographies, prominent buttons, and glassmorphic layouts to focus user attention. The system must support instant English and Urdu translation string matrices resolved natively on the device hardware to ensure zero latency when changing locales. Additionally, to protect users from cellular data depletion and connectivity dropouts, the mobile application must execute a client-side deterministic fallback engine that computes diagnostics locally without active cloud connections.
 
 #### 2.2 Scientific Review Inspectors & Auditors (Administrative Users)
 *   **Demographic Profile & Constraints:**  
@@ -49,7 +48,7 @@ The planned platform must support two distinct user classes with contrasting tec
 | **BRD-FR-003** | **Dual-Model ML Inference** | The planned REST API backend shall ingest soil variables (Nitrogen, Phosphorus, Potassium, temperature, humidity, pH, and rainfall) and execute predictive analysis via two distinct, serialized RandomForestClassifier models. The API must output optimal crop suggestions and fertilizer mixture solutions based on these parameters. | Rural Farmers | High |
 | **BRD-FR-004** | **High-Availability Offline Fallback** | If the mobile client experiences a network timeout when querying backend services, it must execute a local deterministic rules engine on the device. This engine will process local weather parameters (precipitation, heat thresholds above 38°C, and humidity above 80%) to generate prescriptive farming advice locally. | Rural Farmers | High |
 | **BRD-FR-005** | **Non-Blocking Web3 Ledger Sync** | The backend shall log all recommendation events (query inputs, model outputs, and advice text) to the Ethereum Sepolia network using background asynchronous tasks. This asynchronous structure must execute transaction mining operations outside the primary HTTP request thread, preventing blockchain latency from blocking the mobile client interface. | Scientific Inspectors | Medium |
-| **BRD-FR-006** | **Cognitive Advisory Formatting** | The API backend shall connect to Google Gemini Version Two Flash, feed weather parameters into a structured system prompt, and parse the response into a rigid four-tier output format: WATERING, FERTILIZER, PEST RISK, and TODAY'S TIP. The parser must discard any response formatting that deviates from this structure. | Rural Farmers | Medium |
+| **BRD-FR-006** | **Cognitive Advisory Formatting** | The API backend shall connect to Google Gemini Version Two Flash, feed weather parameters into a structured prompt, and parse the response into a rigid four-tier output format: WATERING, FERTILIZER, PEST RISK, and TODAY'S TIP. The parser must discard any response formatting that deviates from this structure. | Rural Farmers | Medium |
 | **BRD-FR-007** | **Fuzzy-Text Pesticide Lookup** | The system shall host a pesticide lookup database that maps crop names and symptoms using fuzzy keyword search checks (including blast, brown spot, stem borer, leaf folder, rust, mildew, armyworm, bollworm, whitefly, aphid, leaf miner, fruit borer). If the symptom lookup fails to match, it must return an organic Neem Oil default treatment. | Rural Farmers | Medium |
 | **BRD-FR-008** | **Local Database Cache Synchronization** | The mobile client shall maintain a local database helper class that automatically saves the query inputs and diagnostic outputs of the active user. The local cache must support search queries, recent records filtering, and complete user-directed log deletion. | Rural Farmers | Medium |
 
@@ -80,3 +79,91 @@ To prevent model execution exceptions caused by schema mismatches, any modificat
 1.  **Validation:** The Data Specialist (Dr. Elena Rostova) must execute data science validation checks confirming that the proposed modification will not cause deserialization or model scoring failures.
 2.  **Review:** The Lead Architect (Muhammad Omer Siddiqui) must review the architectural impact of the change on the Django REST framework serializers and the Flutter mobile controllers.
 3.  **Sign-off:** The Project Sponsor must provide final written authorization and sign-off before changes are deployed to the production staging environment.
+
+---
+
+### 6.0 User Acceptance Criteria & Verification Standards
+
+To guarantee that each developed module meets the quality thresholds of the enterprise software house, the system must satisfy the following verification metrics prior to deployment:
+
+#### 6.1 Crop & Fertilizer Prediction Verification
+*   The Django REST API shall process soil chemical inputs and return crop recommendations that match the agricultural test baseline with an accuracy rating of no less than 92%.
+*   The system shall validate data ingestion models to ensure that payloads mapping categorical data (like Soil Type and Crop Type) are parsed correctly without raising HTTP 500 server errors.
+
+#### 6.2 Offline Failover & Latency Audits
+*   The mobile client must automatically intercept API timeout exceptions (configured at a maximum ceiling of 5 seconds) and trigger the local rules engine in less than 500 milliseconds.
+*   Verification checks will require automated tests simulating network drops during active user forms, confirming that the output conforms to the structured local weather-threshold formats.
+
+#### 6.3 Local Database (SQLite) CRUD Validation
+*   The database helper class shall support concurrent database writes from different views without lock exceptions.
+*   Data deletion requests from the mobile UI must remove target records from the local storage file, freeing up local memory.
+
+---
+
+### 7.0 Data Governance, Privacy, & Security Standards
+
+The proposed system shall establish strict controls to protect farmer data privacy and comply with regional governance rules:
+
+#### 7.1 User Account Protection & Consent
+*   The mobile client shall encrypt all user session tokens using secure device-level storage containers.
+*   A formal consent check must be accepted by the user during the first onboarding session to allow location parameters lookup for weather advice.
+
+#### 7.2 Database Access & Security Boundaries
+*   All administrative queries originating from Scientific Review Inspectors must be authorized via secure authentication tokens.
+*   Direct access to the Azure PostgreSQL database must be restricted behind network security rules, ensuring only the Django REST API backend can establish SQL connections.
+
+---
+
+### 8.0 System Integration, Interfaces, & Data Flow Architecture
+
+The platform's data flow must follow a structured pipeline, ensuring secure communication across all system interfaces:
+
+```mermaid
+graph TD
+    User([Farmer Interface]) -->|1. Inputs Data| Flutter[Flutter Mobile Client]
+    Flutter -->|2. Local Cache Sync| SQLite[(Local SQLite DB)]
+    Flutter -->|3. JSON POST Request| Django[Django REST API Backend]
+    Django -->|4. Load Models| ML[Random Forest Classifiers]
+    Django -->|5. Coordinate Lookup| Weather[OpenWeatherMap API]
+    Django -->|6. Generate Tips Prompt| Gemini[Google Gemini API]
+    Django -->|7. Non-blocking Task| Celery[Celery Background Workers]
+    Celery -->|8. Sign & Send Tx| Sepolia[(Ethereum Sepolia Ledger)]
+    Django -->|9. Audit Log Write| Postgres[(Azure PostgreSQL DB)]
+    Postgres <-->|10. Admin Queries| Inspector([Inspector Admin View])
+```
+
+#### 8.1 API Communication Standards
+*   All data transferred between the Flutter mobile client and the Django REST API must be encrypted using secure HTTPS protocols.
+*   API request payloads must conform to the strict JSON contracts defined in the project specification documentation, verifying that header types are set to application/json.
+
+#### 8.2 Third-Party Service Interfaces
+*   **OpenWeatherMap Interface:** The backend weather client shall query localized weather data by passing latitude and longitude parameters.
+*   **Google Gemini Interface:** The generative AI adapter will communicate with the Gemini API to format weather parameters and output structured farming tips.
+
+---
+
+### 9.0 Training, Deployment, & Rollout Requirements
+
+To ensure smooth transition from development to production release, the software house will implement a structured rollout strategy:
+
+#### 9.1 Multi-Language Onboarding Guide
+*   The mobile client shall include a visual onboarding layout featuring Urdu and English instructions.
+*   A localized help database must be accessible within the settings layout to explain soil parameters (Nitrogen, Phosphorus, Potassium, pH) to non-technical users.
+
+#### 9.2 Staging & Cloud Release Pipelines
+*   **Continuous Integration:** The DevOps Engineer (Fatima Al-Sayed) will configure pipelines that automatically run unit tests on Django API endpoints and Flutter code.
+*   **Azure Deployment:** Successful tests on the main branch will trigger automated deployment to Microsoft Azure Web Apps.
+
+---
+
+### 10.0 Regulatory Compliance & Legal Framework
+
+The AgroSmart platform must comply with international and regional agricultural data standards:
+
+#### 10.1 ISO 21502:2020 Compliance
+*   The project governance model must enforce progress tracking, milestone auditing, and risk mitigation procedures.
+*   The Project Manager will conduct bi-weekly audits to align deliverables with the project budget and milestone targets.
+
+#### 10.2 Blockchain Auditing & Legal Disclaimer
+*   The smart contract auditing ledger must record recommendations to provide a verified advice history log.
+*   The mobile client must display a liability disclaimer indicating that recommendations are generated by machine learning models and local weather rules, advising users to verify results with local extension officers.
