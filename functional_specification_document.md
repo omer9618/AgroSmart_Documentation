@@ -161,7 +161,19 @@ The AgroSmart platform implements a client-server structure designed to process 
 
 ## 3. Functional Specifications
 
-The following sections detail the functional layout, use cases, inputs, and button rules for all 9 screens of the AgroSmart client application.
+The following table summarizes the mapping of the 20 functional requirements (`BRD-FR-001` to `BRD-FR-020`) to the specific FSD screen subsections:
+
+| FSD Section | Screen Name | Mapped Functional Requirements | Priority |
+| :--- | :--- | :--- | :--- |
+| Section 3.1 | Splash Screen | BRD-FR-010 (Persistent Login) | Critical |
+| Section 3.2 | Login & Registration | BRD-FR-001 (Localization), BRD-FR-002 (UI Safety), BRD-FR-009 (Registration) | Critical |
+| Section 3.3 | Home Dashboard | BRD-FR-008 (Cache Synchronization), BRD-FR-018 (Offline Alerting), BRD-FR-019 (Endpoint Routing) | High |
+| Section 3.4 | Crop Form | BRD-FR-003 (ML Ingestion), BRD-FR-011 (Diagnostic Overlay) | High |
+| Section 3.5 | Fertilizer Form | BRD-FR-003 (ML Typo Ingestion) | Critical |
+| Section 3.6 | Pesticide Search | BRD-FR-007 (Fuzzy Lookup) | High |
+| Section 3.7 | Weather Advisory | BRD-FR-006 (AI Formatting), BRD-FR-013 (GPS Coordinates), BRD-FR-004 (Offline Fallback) | High |
+| Section 3.8 | Results Card | BRD-FR-014 (Weather Dashboard), BRD-FR-020 (Verification Link) | High |
+| Section 3.9 | History Logs | BRD-FR-012 (Advisory Expansion), BRD-FR-015 (Log Search), BRD-FR-016 (Log Filtering), BRD-FR-017 (Sign-out), BRD-FR-005 (Web3 Auditing) | High |
 
 ---
 
@@ -188,7 +200,7 @@ A full-screen linear gradient running from deep forest green (`#1B5E20`) at the 
 
 #### 3.1.4 Functional Requirements
 *   **BRD-FR-010: Session Authentication & Persistent Login**  
-    The system shall query secure client storage (Keychain/Keystore) on splash launch to check if a valid Firebase session token exists.
+    The system shall query secure client storage (Keychain/Keystore) on splash launch to check if a valid Firebase session token exists. If valid, the system shall bypass the login screen and load the user dashboard immediately.
 
 #### 3.1.5 Field level specifications
 *This screen contains no user input form fields.*
@@ -279,6 +291,8 @@ Top App Bar in emerald green containing the title "AgroSmart Dashboard", local l
     The Home Screen shall query the SQLite database helper class on launch to populate the active log count badge.
 *   **BRD-FR-018: Network State Alerting**  
     The application shall monitor network status. If offline, the top header must display a persistent orange warning banner indicating that recommendations are restricted to local fallback advice.
+*   **BRD-FR-019: Global Staging and Production Endpoint Routing**  
+    The application configures base URLs dynamically using the `useLocalBackend` toggle flag. If active, API transactions route to `http://127.0.0.1:8000/api`. If inactive, requests route to the production Azure endpoint.
 
 #### 3.3.5 Field level specifications
 *This screen contains no input fields.*
@@ -449,6 +463,11 @@ Top location chip toggle bar: "Use GPS Location" vs "Enter Coordinates Manually"
     The backend shall enforce a rigid prompt structure returning exactly four headings: `💧 WATERING`, `🌱 FERTILIZER`, `🐛 PEST RISK`, and `✅ TIP`.
 *   **BRD-FR-013: Geographic Coordinates Sourcing**  
     The application shall query device GPS sensors to obtain coordinates. If sensors fail or permissions are denied, it shall default to Islamabad coordinates (`33.6844, 73.0479`) and allow manual adjustments.
+*   **BRD-FR-004: High-Availability Offline Fallback**  
+    If network connectivity is lost or the API request times out (exceeding 5 seconds), client-side interceptors shall trigger `get_fallback_advice()` within 500ms using deterministic local rules based on current temperature, humidity, and conditions:
+    *   Rain/Thunderstorm -> watering = "No", fertilizer = "Wait", pest = "Medium", tip = "Cover sensitive crops".
+    *   Temp > 38°C -> watering = "Yes", fertilizer = "Wait", pest = "High", tip = "Provide shade".
+    *   Humidity > 80% -> watering = "No", fertilizer = "Wait", pest = "High - fungal", tip = "Ensure air circulation".
 
 #### 3.7.5 Field level specifications
 ##### Form Elements:
@@ -495,8 +514,8 @@ Presents the evaluation report for crop, fertilizer, pesticide, or weather advic
 App Bar with a back arrow and history link. The body contains an elevated gradient card showing a white circular checkmark and the recommended action in large typography. Below is an input/output details comparison table. Pinned to the bottom is a dashed-line "Security Audit Receipt" ticket displaying the transaction hash, Sepolia status flag, and a "Verify on Sepolia Etherscan" link.
 
 #### 3.8.4 Functional Requirements
-*   **BRD-FR-012: Advisory Query Detail Expansion**  
-    The screen shall render a summary detail comparison matrix comparing user inputs to target ranges.
+*   **BRD-FR-014: Unified Weather Advisory Dashboard**  
+    The Result Screen shall combine localized weather readings (temperature, humidity, wind conditions) with structured, parsed conversational advisory recommendations in a single scrollable panel.
 *   **BRD-FR-020: Ledger Verification Link Generation**  
     The receipt ticket shall read the transaction hash returned from Django. If synchronized, it must enable a clickable hyperlink redirecting the user to `https://sepolia.etherscan.io/tx/{hash}`.
 
@@ -525,10 +544,16 @@ App Bar with a "Clear All" trash bin icon. Below is a sticky row of filter chips
 #### 3.9.4 Functional Requirements
 *   **BRD-FR-008: Local Database Cache Synchronization**  
     The view list shall load records from the local SQLite cache, automatically updating the homepage log count badge on deletion events.
+*   **BRD-FR-012: Advisory Query Detail Expansion**  
+    Tapping a historical diagnostic log card shall trigger a details drawer expanding raw inputs and exact output advice cached locally on SQLite.
 *   **BRD-FR-015: Historical Log Searching**  
     The search bar shall support keyword queries, filtering history cards based on crop, fertilizer, or location strings.
 *   **BRD-FR-016: Historical Log Categorical Filtering**  
-    Tapping category chips must restrict list items to only those corresponding to the selected type.
+    Tapping category chips must restrict list items to only those corresponding to the selected type (Crops, Fertilizers, Pesticides, Weather).
+*   **BRD-FR-017: Session Termination & Account Sign-out**  
+    A settings sign-out trigger shall terminate active Firebase sessions, clear cached authentication tokens, flush the local memory state, and redirect users to the Login Screen.
+*   **BRD-FR-005: Non-Blocking Web3 Auditing**  
+    Audit history records shall expose sync status tags showing whether the recommendation transaction is 'Synchronized' or 'Pending Blockchain Sync' on the Sepolia Ethereum testnet.
 
 #### 3.9.5 Field level specifications
 ##### Form Elements:
