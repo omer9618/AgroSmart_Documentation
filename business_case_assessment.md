@@ -9,7 +9,7 @@ The agricultural sector in regional and developing markets faces a severe macroe
 
 To solve this systemic problem, the proposed AgroSmart platform will deploy an integrated client-server agricultural intelligence solution. The system shall utilize a high-performance Python Django REST API backend coupled with a Flutter-based mobile client to deliver localized, data-driven soil analyses, predictive crop advice, and AI-enabled meteorological tips directly to the field. 
 
-The capital required for this implementation is fixed at a Capital Expenditure (CapEx) of $35,000. Through the reduction of manual advisory travel, the mitigation of commercial crop failure risks, and the generation of secondary B2B data monetization streams (such as micro-lending verification and crop insurance underwriting), the platform is projected to deliver a complete Return on Investment (ROI) within eighteen months post-launch.
+The capital required for this implementation is fixed at a Capital Expenditure (CapEx) of $35,000, representing a highly optimized, lean MVP configuration. Through the reduction of manual advisory travel, the mitigation of commercial crop failure risks, and the generation of secondary B2B data monetization streams (such as micro-lending verification and crop insurance underwriting), the platform is projected to deliver a complete Return on Investment (ROI) within eighteen months post-launch.
 
 ---
 
@@ -22,20 +22,22 @@ The proposed Django REST API backend and Flutter mobile client directly moderniz
 
 ### 3.0 Market Optimization & Target Demographic Analysis
 The system accommodates two distinct user groups with specific technical requirements:
-*   **Rural Farmers:** This demographic is characterized by limited smartphone literacy, high cost-sensitivity regarding mobile data usage, and regional language barriers. The mobile application shall be engineered using the Flutter framework to support a responsive user interface, utilizing the 'provider' state management library to optimize local device resources. Dynamic English and Urdu translation string matrices will be managed by the 'easy_localization' library to remove literacy barriers and accelerate user adoption in remote farming sectors.
-*   **Scientific Review Inspectors:** These stakeholders demand absolute data integrity and regulatory transparency. The planned backend will host a local SQLite relational database configuration that caches diagnostic history and recommendation logs. Inspectors will be provided with custom queries and index-optimized search parameters to audit crop recommendation metrics, verify query timestamps, and validate agronomic advice records.
+*   **Rural Farmers:** This demographic is characterized by limited smartphone literacy, high cost-sensitivity regarding mobile data usage, and regional language barriers. The mobile application shall be engineered using the Flutter framework to support a responsive user interface, utilizing the 'provider' state management library to optimize local device resources. Dynamic English and Urdu translation string matrices will be managed by the 'easy_localization' library to remove literacy barriers and accelerate user adoption in remote farming sectors. Local history tracking and offline query capabilities will be stored and supported natively within the Flutter architecture using a strict client-side mobile persistence engine running SQLite on the device.
+*   **Scientific Review Inspectors:** These stakeholders demand absolute data integrity, regulatory transparency, and high-performance querying. The planned centralized backend hosted on Microsoft Azure will deploy a cloud-native, high-availability PostgreSQL database engine. This dedicated engine will handle inspector concurrent administrative queries and long-term diagnostic tracking, enabling inspectors to securely audit crop recommendation metrics, verify query timestamps, and validate agronomic advice records.
 
 ---
 
 ### 4.0 Financial Feasibility & Cost-Benefit Analysis (CBA)
 
 #### Table 4.1: Capital Expenditure (CapEx) Breakdown
-| Core Project Task | Specific Sub-Tasks & Deliverables | Planned Budget |
-| :--- | :--- | :--- |
-| **Backend Engineering & Data Pipelines** | REST API development, schema configuration, and RandomForestClassifier model serialization. | $15,000 |
-| **Frontend Mobile Development** | Flutter UI layout, provider state control, localization implementation, and video onboarding layers. | $12,000 |
-| **DevOps Infrastructure & Web3** | Azure Web App pipelines, Sepolia Ethereum smart contract deployment, and Web3 connection testing. | $8,000 |
-| **TOTAL INITIAL INVESTMENT** | | **$35,000** |
+| Core Project Task | Specific Sub-Tasks & Deliverables | Dedicated Agile Squad Member | Planned Budget |
+| :--- | :--- | :--- | :--- |
+| **Backend Engineering & Data Pipelines** | REST API development, schema configuration, and RandomForestClassifier model serialization. | Dr. Elena Rostova (Full-Stack Backend & Data Specialist) | $15,000 |
+| **Frontend Mobile Development** | Flutter UI layout, provider state control, localization implementation, and video onboarding layers. | Tariq Mahmood (Frontend Mobile & QA Specialist) | $12,000 |
+| **DevOps Infrastructure & Web3** | Azure Web App pipelines, Sepolia Ethereum smart contract deployment, and Web3 connection testing. | Muhammad Omer Siddiqui (Engagement Director & Lead Architect) | $8,000 |
+| **TOTAL INITIAL INVESTMENT** | | | **$35,000** |
+
+*Note: The $35,000 budget represents a highly optimized, lean MVP configuration. The dedicated Agile Squad listed above is fully funded by this allocation. Other specialized project roles (such as Scrum Master, Web3 Developer, and DevOps Engineer) represent shared software house agency resources whose operational hours are scaled and subsidized across parallel agency portfolios to maximize capital efficiency.*
 
 #### Table 4.2: Operational Expenditure (OpEx) Projections (Annualized)
 | Infrastructure Component | Operations Tier & Sizing Specification | Year 1 Cost | Year 2 Cost | Year 3 Cost |
@@ -49,9 +51,9 @@ The system accommodates two distinct user groups with specific technical require
 #### Table 4.3: Tangible & Intangible Financial Benefits
 | Benefit Category | Expected Financial Return | Operational Metric |
 | :--- | :--- | :--- |
-| **Advisory Overhead Reduction** | Reductions in manual survey travel and field adviser administrative costs. | 45% reduction in annual operational costs. |
-| **B2B API Data Monetization** | Subscription fees from local micro-finance lenders and crop insurance underwriter systems. | Target revenue of $18,000 annually starting in Year 2. |
-| **Institutional Legal Savings** | Mitigation of crop loss claims and dispute settlements via immutable smart contract logs. | Elimination of liability settlement outlays. |
+| **Advisory Overhead Reduction** | Reductions in manual survey travel and field adviser administrative costs. | Reduces operational overhead of physical extension officer field deployments from a baseline of $120 per farm visit down to sub-$5 per automated digital request. |
+| **B2B API Data Monetization** | Subscription fees from local micro-finance lenders and crop insurance underwriter systems. | Target revenue of $18,000 annually starting in Year 2 through automated validation APIs. |
+| **Institutional Legal Savings** | Mitigation of crop loss claims and dispute settlements via immutable smart contract logs. | Insulates the enterprise against historical crop-loss litigations that average $25,000 per formal dispute settlement. |
 
 ---
 
