@@ -225,24 +225,28 @@ The core features of the AgroSmart platform include:
 
 The following table summarizes the requirements listed in Section 3:
 
-| Component | Reference Number | Requirement Name | Issue # |
+| Component | Reference Number | Requirement Name | Priority |
 | :--- | :--- | :--- | :--- |
-| Machine Learning | REQ-ML-001 | Soil Payload Schema Validation | #1 |
-| Machine Learning | REQ-ML-002 | Non-standard Space/Typo Preservation | #2 |
-| Machine Learning | REQ-ML-003 | Model Output Target Mapping | #3 |
-| Offline Fallback | REQ-OF-001 | Latency Interceptor and Failover | #4 |
-| Offline Fallback | REQ-OF-002 | Local Weather Threshold Calculation | #5 |
-| Offline Fallback | REQ-OF-003 | Persistent Offline Visual Warning Banner | #6 |
-| Pesticide Lookup | REQ-PE-001 | Fuzzy Symptom Keyword Lookup Search | #7 |
-| Pesticide Lookup | REQ-PE-002 | Default Organic Neem Oil Fallback | #8 |
-| Local Database | REQ-DB-001 | Automatic Database Local Logging | #9 |
-| Local Database | REQ-DB-002 | Categorical Tag Query Filtering | #10 |
-| Local Database | REQ-DB-003 | Historical Entry Deletion | #11 |
-| User Session | REQ-AU-001 | Firebase Authentication and Password Severity | #12 |
-| User Session | REQ-AU-002 | Local Session Persistence and Auto-Login | #13 |
-| Weather Tips | REQ-WE-001 | Geolocator Coordinates Tracking | #14 |
-| Weather Tips | REQ-WE-002 | GPS Signal Loss Islamabad Default Fallback | #15 |
-| Weather Tips | REQ-WE-003 | Gemini 2.0 Flash Advisory Response Schema Parsing | #16 |
+| Machine Learning | BRD-FR-003 | Dual-Model ML Ingestion | High |
+| Machine Learning | BRD-FR-011 | Soil Diagnostic Guidance Overlay | Medium |
+| Machine Learning | BRD-FR-019 | Global Staging and Production Endpoint Routing | High |
+| Offline Fallback | BRD-FR-004 | High-Availability Offline Fallback | High |
+| Offline Fallback | BRD-FR-018 | Network State Alerting | Medium |
+| Pesticide Lookup | BRD-FR-007 | Fuzzy-Text Pesticide Lookup | Medium |
+| Local Database | BRD-FR-008 | Local Database Cache Synchronization | Medium |
+| Local Database | BRD-FR-012 | Advisory Query Detail Expansion | Medium |
+| Local Database | BRD-FR-015 | Historical Log Searching | Medium |
+| Local Database | BRD-FR-016 | Historical Log Categorical Filtering | Medium |
+| User Session | BRD-FR-009 | User Account Registration | High |
+| User Session | BRD-FR-010 | Session Authentication & Persistent Login | High |
+| User Session | BRD-FR-017 | Session Termination & Account Sign-out | High |
+| User Session | BRD-FR-001 | Native Multi-Language Toggling | High |
+| User Session | BRD-FR-002 | Low-Spec UI Layout Safety | High |
+| Weather Tips | BRD-FR-006 | Cognitive Advisory Formatting | Medium |
+| Weather Tips | BRD-FR-013 | Geographic Coordinates Sourcing | High |
+| Weather Tips | BRD-FR-014 | Unified Weather Advisory Dashboard | Medium |
+| Weather Tips | BRD-FR-005 | Non-Blocking Web3 Auditing | Medium |
+| Weather Tips | BRD-FR-020 | Ledger Verification Link Generation | Low |
 
 ---
 
@@ -256,22 +260,15 @@ The platform shall evaluate incoming soil chemical metrics and return crop sugge
 *   **System Response:** Client compiles payload, transmits to Django, runs model file evaluations, returns recommended name, and caches metrics in SQLite.
 
 #### 3.1.3. Functional Requirements
-*   **REQ-ML-001: Soil Payload Validation**  
-    The backend shall reject any POST payload mapping variables outside typical agricultural limits:
-    *   Nitrogen (N) must be bounded between `0.0` and `140.0`.
-    *   Phosphorus (P) must be bounded between `0.0` and `145.0`.
-    *   Potassium (K) must be bounded between `0.0` and `205.0`.
-    *   Soil pH must be bounded between `0.0` and `14.0`.
-    *   Temperature must be bounded between `0.0` and `50.0`°C.
-    *   Humidity must be bounded between `0.0` and `100.0`%.
-    *   Rainfall must be bounded between `0.0` and `300.0` mm.
-*   **REQ-ML-002: Non-standard Parameter Mapping**  
-    The fertilizer prediction endpoint (`/api/fertilizer/`) shall accept parameters using the exact strings:
-    *   `Temparature` (with 'a' in the second syllable)
-    *   `Humidity ` (with a trailing space character)
-    *   `Phosphorous` (with 'o' before 'u')
-*   **REQ-ML-003: Model Output Target Mapping**  
-    The system shall decode model prediction outputs using target encoders to map numeric classifications back to their human-readable strings (e.g. crop classification classes like `rice`, `maize`, or fertilizer formulas like `Urea`, `DAP`).
+*   **BRD-FR-003: Dual-Model ML Ingestion**  
+    The planned API backend shall process diagnostic queries using two distinct pre-trained machine learning classification models to recommend optimal crop types and fertilizer mixtures.
+    *   Crop Prediction Model (`crop_model.pkl`) shall ingest Nitrogen (N: 0-140), Phosphorus (P: 0-145), Potassium (K: 0-205), Soil pH (0-14), Temperature (0-50°C), Humidity (0-100%), and Rainfall (0-300mm) variables.
+    *   Fertilizer Prediction Model (`fertilizer_model_final.pkl`) shall ingest Nitrogen, Potassium, Phosphorous, Temperature, Humidity, Moisture, Soil Type, and Crop Type.
+    *   To prevent execution crashes, backend serializers and mobile form fields must strictly preserve non-standard training data spellings: `'Temparature'`, `'Humidity '` (trailing space), and `'Phosphorous'`.
+*   **BRD-FR-011: Soil Diagnostic Guidance Overlay**  
+    The mobile client shall provide a modal guidance overlay on input screens, displaying valid agronomic parameters (including valid range margins for NPK, pH, and precipitation variables) to help users avoid out-of-bound inputs.
+*   **BRD-FR-019: Global Staging and Production Endpoint Routing**  
+    The mobile client shall configuration-route all API traffic to either the local development staging endpoint (`http://127.0.0.1:8000/api`) or the Azure production host based on the toggle flag configuration (`useLocalBackend`).
 
 ##### 3.1.3.1. Use Cases
 
@@ -290,7 +287,7 @@ The platform shall evaluate incoming soil chemical metrics and return crop sugge
 | **Includes** | Local Database Cache Sync |
 | **Priority** | Critical |
 | **Frequency of Use** | Weekly per farmer |
-| **Business Rules** | Payload schema must match training data literals exactly. |
+| **Business Rules** | Payload schema must match training data literals exactly (`Temparature`, `Humidity `, `Phosphorous`). |
 | **Special Requirements**| Must support instantaneous English-Urdu text swap. |
 | **Assumptions** | Coordinates represent valid geographic values. |
 | **Notes and Issues** | Tracks typos documented in Appendix C. |
@@ -303,19 +300,17 @@ The platform shall evaluate incoming soil chemical metrics and return crop sugge
 Executes a deterministic rules engine natively on the mobile client if backend network requests time out or fail.
 
 #### 3.2.2. Stimulus/Response Sequences
-*   **User Action:** User initiates weather tip lookup.
-*   **System Response:** Device network monitor detects a timeout exceeding 5 seconds, intercepts the process, triggers `get_fallback_advice()`, and renders the result with a persistent offline banner.
+*   **User Action:** User initiates weather tip lookup or prediction request.
+*   **System Response:** Device network monitor detects a timeout exceeding 5 seconds, intercepts the process, triggers `get_fallback_advice()` within 500ms, and renders the result with a persistent offline banner.
 
 #### 3.2.3. Functional Requirements
-*   **REQ-OF-001: Automated Timeout Interception**  
-    The client shell shall intercept HTTP timeouts in under 500ms and swap connection streams to the local logic block.
-*   **REQ-OF-002: Deterministic Rule Application**  
-    The client logic shall output advice based on local thresholds:
+*   **BRD-FR-004: High-Availability Offline Fallback**  
+    If cloud APIs timeout or local network connectivity is lost, the client shall execute a local threshold rules engine (`get_fallback_advice()`) to parse weather variables natively:
+    *   Rain/Thunderstorm -> watering = "No", fertilizer = "Wait", pest = "Medium", tip = "Cover sensitive crops".
     *   Temp > 38°C -> watering = "Yes - Extreme heat!", fertilizer = "Wait - Heat causes burn", pest = "High - mites", tip = "Provide shade".
     *   Humidity > 80% -> watering = "No", fertilizer = "Wait - risk of fungus", pest = "High - fungal risk", tip = "Ensure good air circulation".
-    *   Rain/Thunderstorm -> watering = "No", fertilizer = "Wait", pest = "Medium", tip = "Cover sensitive crops".
-*   **REQ-OF-003: UI Offline Banner Warning**  
-    Renders a persistent, orange caution banner displaying the offline state.
+*   **BRD-FR-018: Network State Alerting**  
+    The client application shall monitor device network connection states and render a persistent, non-blocking warning banner (orange background) when the device goes offline, indicating that queries will use the local fallback engine.
 
 ##### 3.2.3.1. Use Cases
 
@@ -335,7 +330,7 @@ Executes a deterministic rules engine natively on the mobile client if backend n
 | **Priority** | Critical |
 | **Frequency of Use** | Daily |
 | **Business Rules** | Fallback must run under 500ms. |
-| **Special Requirements**| Displays a persistent offline status warning. |
+| **Special Requirements**| Displays a persistent offline status warning banner. |
 | **Assumptions** | Offline rules reflect safe regional agricultural practices. |
 | **Notes and Issues** | Rule thresholds align with regional crop requirements. |
 
@@ -351,10 +346,8 @@ Provides localized diagnostic matches by parsing user symptom descriptions again
 *   **System Response:** System compares description against active symptom keywords, extracts matching entries, and returns dosage and application details.
 
 #### 3.3.3. Functional Requirements
-*   **REQ-PE-001: Fuzzy Keyword Parsing**  
-    The system shall evaluate symptom descriptions using fuzzy matching against target disease keywords (including `blast`, `brown spot`, `stem borer`, `leaf folder`, `rust`, `mildew`, `armyworm`, `bollworm`, `whitefly`, `aphid`, `leaf miner`, `fruit borer`).
-*   **REQ-PE-002: Organic Treatment Fallback Defaults**  
-    If the symptom description does not match any keyword in the database, the system shall default to returning a standardized organic Neem Oil treatment regimen (dosage: `5ml per liter water`, frequency: `every 7 days`).
+*   **BRD-FR-007: Fuzzy-Text Pesticide Lookup**  
+    The system shall host a pesticide lookup database that maps crop names and symptoms using fuzzy keyword search checks (including blast, brown spot, stem borer, leaf folder, rust, mildew, armyworm, bollworm, whitefly, aphid, leaf miner, fruit borer). If the symptom lookup fails to match, it must return a standardized organic Neem Oil default treatment (dosage: `5ml per liter water`, frequency: `every 7 days`).
 
 ##### 3.3.3.1. Use Cases
 
@@ -390,12 +383,14 @@ Provides offline data accessibility by automatically caching user diagnostic par
 *   **System Response:** System automatically executes a background database write to store the query inputs and result outputs in the local cache, updating the history badge count.
 
 #### 3.4.3. Functional Requirements
-*   **REQ-DB-001: Automatic Local Database Cache**  
-    The mobile client shall save all query variables and output recommendations to the local SQLite database immediately upon receipt of a successful server response.
-*   **REQ-DB-002: Categorical and Keyword Filtering**  
-    The History Screen shall support local keyword searching (e.g., filtering logs by crop name) and categorical filter chips (Crops, Fertilizers, Pesticides, Weather).
-*   **REQ-DB-003: History Record Deletion**  
-    The application shall support swipe-to-delete gestures on history cards, removing records from database storage and updating the cache list.
+*   **BRD-FR-008: Local Database Cache Synchronization**  
+    The mobile client shall maintain a local database helper class that automatically saves the query inputs and diagnostic outputs of the active user. The local cache must support search queries, recent records filtering, and complete user-directed log deletion.
+*   **BRD-FR-012: Advisory Query Detail Expansion**  
+    The history screen shall support detail cards for each past recommendation. Clicking a log card will expand a detailed view displaying the original input metrics and the exact recommendation output.
+*   **BRD-FR-015: Historical Log Searching**  
+    The local database helper shall support query-string keyword searching. Users can input query text to search historical entries by crop, fertilizer, or location names.
+*   **BRD-FR-016: Historical Log Categorical Filtering**  
+    The history views shall support filter tags allowing the user to display entries by category type (such as displaying only crop recommendations or only weather tips).
 
 ##### 3.4.3.1. Use Cases
 
@@ -431,14 +426,16 @@ Secures user data and diagnostic histories by forcing user registration and sess
 *   **System Response:** System validates parameters, sends request to Firebase Authentication, verifies the token, caches session keys, and routes the user to the home dashboard.
 
 #### 3.5.3. Functional Requirements
-*   **REQ-AU-001: Firebase Authentication Integration**  
-    The application shall handle registration and logins using the Firebase Authentication SDK. Sign-up forms must enforce strong password rules:
-    *   Minimum length: 8 characters.
-    *   At least one uppercase letter.
-    *   At least one numeric digit.
-    *   At least one special character (`!@#$%^&*`).
-*   **REQ-AU-002: Persistent Session and Auto-Login Caching**  
-    The system shall save authentication tokens locally. On launch, the splash screen will check token validity, bypassing the login portal for active sessions.
+*   **BRD-FR-009: User Account Registration**  
+    The system shall support new account registration on the mobile client, enforcing strict client-side verification parameters for passwords (minimum 8 characters, at least one uppercase letter, one number, and one special character), emails, and full names before creating the user record in Firebase.
+*   **BRD-FR-010: Session Authentication & Persistent Login**  
+    The mobile application shall maintain secure user sessions, caching authentication tokens locally to allow automatic verification and log the user directly in upon restarting the application.
+*   **BRD-FR-017: Session Termination & Account Sign-out**  
+    The settings screen shall support a sign-out trigger. Activating this request will close the Firebase session, erase cached security tokens from local device storage, and clear active UI state logs.
+*   **BRD-FR-001: Native Multi-Language Toggling**  
+    The system shall support instant toggling between English and Urdu language string matrices resolved natively on the device hardware via tokenized dictionary files (`easy_localization`).
+*   **BRD-FR-002: Low-Spec UI Layout Safety**  
+    Screen layouts must isolate keyboard input fields, configuring the root container (`resizeToAvoidBottomInset: false` on the root Scaffold) to prevent viewport resizing and utilizing manual view-inset offsets to eliminate form collapses on small screens.
 
 ##### 3.5.3.1. Use Cases
 
@@ -474,12 +471,16 @@ Integrates local weather coordinates with generative AI prompts to supply dynami
 *   **System Response:** System reads coordinates from the GPS receiver, calls OpenWeatherMap, compiles weather values, runs Google Gemini advice generation, and displays the structured outputs.
 
 #### 3.6.3. Functional Requirements
-*   **REQ-WE-001: GPS Location Sourcing**  
-    The client app shall request location permissions and query the device GPS to retrieve current latitude and longitude coordinates.
-*   **REQ-WE-002: GPS Signal Loss Default Fallback**  
-    If the device GPS is unavailable or permissions are denied, the system shall fallback to using default coordinates for Islamabad (`33.6844, 73.0479`) and allow manual latitude and longitude entry.
-*   **REQ-WE-003: Gemini Advice Prompt and Schema Parsing**  
-    The backend shall compile coordinates, query OpenWeatherMap, and structure a prompt for Google Gemini 2.0 Flash. The API response must be parsed and mapped to four specific sections: `💧 WATERING`, `🌱 FERTILIZER`, `🐛 PEST RISK`, and `✅ TIP`.
+*   **BRD-FR-006: Cognitive Advisory Formatting**  
+    The API backend shall connect to Google Gemini Version Two Flash, feed weather parameters into a structured prompt, and parse the response into a rigid four-tier output format: `💧 WATERING`, `🌱 FERTILIZER`, `🐛 PEST RISK`, and `✅ TIP`. The parser must discard any response formatting that deviates from this structure.
+*   **BRD-FR-013: Geographic Coordinates Sourcing**  
+    The mobile client shall request geographic permissions and query the local hardware GPS receiver to extract coordinates for real-time location-based weather advisory requests. If GPS is unavailable, it shall fallback to Islamabad (`33.6844, 73.0479`).
+*   **BRD-FR-014: Unified Weather Advisory Dashboard**  
+    The weather dashboard layout shall combine localized meteorological readings (temperature, wind speeds, conditions) with structured, parsed conversational advisory recommendations in a single scrollable panel.
+*   **BRD-FR-005: Non-Blocking Web3 Auditing**  
+    The system shall log recommendation parameters to the Ethereum Sepolia network using background asynchronous tasks (`Celery`), keeping mobile threads responsive and preventing mining delays from blocking the user interface.
+*   **BRD-FR-020: Ledger Verification Link Generation**  
+    The transaction history card shall capture and store the transaction hash returned by the Sepolia network, rendering a direct hyperlink to the external blockchain explorer.
 
 ##### 3.6.3.1. Use Cases
 
