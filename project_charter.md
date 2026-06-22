@@ -95,9 +95,14 @@ Describe the expected benefits of the project:
 ### 8. Project Team Members
 | Role | Name | Enterprise Contact Channels | Scope of Ownership |
 | :--- | :--- | :--- | :--- |
-| Project Manager & Lead Solution Architect | Muhammad Omer Siddiqui | omer@softwarehouse.com | Project Governance, Milestone Verification, Client Liaison. |
-| Full-Stack Backend & Data Engineer | Dr. Elena Rostova | engineering@softwarehouse.com | REST API Construction, Data Serialization, Web3 Integration. |
-| Frontend Mobile & QA Specialist | Tariq Mahmood | qa@softwarehouse.com | Flutter UI Development, State Binding, Translation Quality Verification. |
+| Engagement Director | Muhammad Omer Siddiqui | omer@softwarehouse.com | Executive oversight, client SLA validation, contract compliance management, and strategic guidance. |
+| Project Manager & Scrum Master | Marcus Vance | pm@softwarehouse.com | Sprint tracking, milestone scheduling, resource coordination, daily standups, and status reports. |
+| Lead Solution Architect | Dr. Elena Rostova | engineering@softwarehouse.com | Overall system architecture design, database schema patterns, and Web3 smart contract strategy. |
+| Data & Machine Learning Specialist | Dr. Sarah Jenkins | data@softwarehouse.com | Training, testing, and serialization of predictive Random Forest classification models. |
+| Full-Stack Backend Developer | Alex Mercer | dev@softwarehouse.com | Django REST API construction, integration of third-party cognitive endpoints, and rule failover logic. |
+| Mobile Application Developer | Tariq Mahmood | qa@softwarehouse.com | Flutter UI view development, Provider state binding, and easy_localization language mapping. |
+| Blockchain Developer | Kenji Sato | web3@softwarehouse.com | Solidity smart contract programming, Sepolia gas optimization, and Web3 RPC transaction wrappers. |
+| QA & DevOps Automation Engineer | Fatima Al-Sayed | devops@softwarehouse.com | Azure deployment pipelines, unit test suites execution, and multi-language UI translation checks. |
 
 ---
 
