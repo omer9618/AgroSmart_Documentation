@@ -77,14 +77,22 @@ The following documents were referenced and used in creating this deliverable; t
 *   **AgroSmart Business Requirements Document (BRD) Version 1.0**, June 22, 2026.
 *   **AgroSmart Functional Specification Document (FSD) Version 1.0**, June 22, 2026.
 
----
-
 ## 4. Non-Functional Requirements
-The Non-Functional Requirements for the AgroSmart platform are grouped below in the following categories:
-*   Performance
-*   Security
-*   Compatibility
-*   Maintainability
+
+### 4.0. Requirements Traceability Matrix
+The following matrix maps each Non-Functional Requirement (NFR) specified in this document back to the corresponding sections, constraints, and protocols defined in the AgroSmart Business Requirements Document (BRD):
+
+| NFR ID | Requirement Name | Category | Primary BRD Mapping Section | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| **NF-PU-01** | User Responsiveness (Normal Load) | Performance | BRD Section 5.1 (Performance) | API inference under 2s, SQLite under 100ms. |
+| **NF-PU-02** | User Responsiveness (Peak Load) | Performance | BRD Section 5.1 (Performance) | Offline trigger under 500ms on 5s timeout. |
+| **NF-PB-01** | Background Ledger Auditing | Performance | BRD Section 6.1 (Web3 Failover) | Celery background confirmation under 30s. |
+| **NF-SA-01** | Recommendation Ledger Auditing | Security | BRD Section 5.3 (Data Isolation) & 6.1 | Sepolia auditing proof logs mapping. |
+| **NF-SS-01** | Session Security & Encryption | Security | BRD Section 5.2 (Security) & 2.5 | Firebase credentials secure storage caching. |
+| **NF-CC-01** | Cross-Platform Client | Compatibility | BRD Section 2.4 (Operating Environment) | iOS 15.0+ / Android API 28+ execution. |
+| **NF-LC-01** | Local Cache Compatibility | Compatibility | BRD Section 5.3 (Data Isolation) & 5.1 | SQLite offline filtering and history query times. |
+| **NF-ER-01** | Multi-Tier Application Errors | Maintainability | BRD Section 6.1 (Alerting & Recovery) | Interception log error codes (ERR-INT-101/104). |
+| **NF-ER-02** | Ingestion Schema Typo Realignment | Maintainability | BRD Section 2.5 & 6.2 (Change Path) | Typo parameters alignment validations. |
 
 ---
 
