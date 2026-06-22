@@ -8,6 +8,26 @@
 
 ---
 
+### Authors
+| Name | Role | Department |
+| :--- | :--- | :--- |
+| Muhammad Omer Siddiqui | Engagement Director & Lead Architect | Core Architecture & Management |
+| Dr. Elena Rostova | Full-Stack Backend & Data Specialist | Backend Engineering |
+| Tariq Mahmood | Frontend Mobile & QA Specialist | Mobile UI/UX & Testing |
+
+### Document History
+| Date | Version | Document Revision Description | Document Author |
+| :--- | :--- | :--- | :--- |
+| 06/22/2026 | 1.0 | Initial Non-Functional Requirements Baseline | Muhammad Omer Siddiqui |
+
+### Approvals
+| Approval Date | Approved Version | Approver Role | Approver |
+| :--- | :--- | :--- | :--- |
+| 06/22/2026 | 1.0 | Project Sponsor | Client Venture Team |
+| 06/22/2026 | 1.0 | Lead Solution Architect | Muhammad Omer Siddiqui |
+
+---
+
 ## Table of Contents
 1. [Introduction](#1-introduction)
 2. [Overview](#2-overview)
