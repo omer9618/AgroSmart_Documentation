@@ -22,12 +22,14 @@ In accordance with ISO 21502 guidelines, the platform will implement a transpare
 
 ### 3. Project Deliverables
 List the key planned deliverables of the project to be produced during the development lifecycle:
-*   **Deliverable 1 (Mobile UI Architecture):**  
-    A compiled, cross-platform mobile application featuring an optimized onboarding and login screen. The planned onboarding portal will utilize a custom glassmorphism overlay positioned on top of a looping local background video asset. Mandate that the root Scaffold must be configured with 'resizeToAvoidBottomInset: false' and leverage manual view-inset padding to mathematically eliminate keyboard rendering collapses. The application will include active Urdu/English localization toggles using the specified localization libraries.
-*   **Deliverable 2 (Machine Learning Backend):**  
-    A Python Django REST API containing two pre-trained, serialized classification models. The backend will load the Crop recommendation model (predicting the optimal crop type based on Nitrogen, Phosphorus, Potassium, temperature, humidity, pH, and rainfall inputs) and the Fertilizer recommendation model (predicting optimal soil additives).
-    
-    To prevent server-side mapping exceptions and input processing crashes, the backend serializer fields and the frontend dropdown controllers must exactly mirror the naming conventions and typographical nuances of the training datasets. The engineering team must enforce the use of these exact mandated parameter strings:
+*   **Deliverable 1 (Cross-Platform Mobile UI Framework):**  
+    A compiled, cross-platform mobile client built using Flutter to ensure native execution on Android and iOS devices. The planned layout features a highly responsive home dashboard screen linking to modular input screens. The onboarding login portal will utilize a custom glassmorphism overlay positioned on top of a looping local background video asset. To mathematically eliminate layout collapses when mobile virtual keyboards are engaged, the root Scaffold configuration shall enforce 'resizeToAvoidBottomInset: false' and apply custom-calculated view-inset padding dynamically using screen metrics.
+*   **Deliverable 2 (Central User Authentication Service):**  
+    A client-side security interface integrated with Firebase Authentication to handle secure logins, user registrations, and password recoveries. The system shall employ robust local validation algorithms for text entry fields, including strong password evaluation rules (requiring uppercase characters, numeric digits, and special characters) and email syntax checkers, redirecting authenticated users to the home dashboard.
+*   **Deliverable 3 (Local Relational Database & History Tracker):**  
+    A local SQLite database database engine managed via custom helper utilities to handle local persistence. The database will define tables structured to save recommendations, storing user identification keys, query types, inputs, results, and timestamp strings. The database helper will implement indexing to accelerate query fetches, support search operations across saved records, count queries, and enable full user-bound deletion controls.
+*   **Deliverable 4 (Machine Learning Django API Backend):**  
+    A central REST API backend hosted on Django REST Framework loading pre-trained RandomForestClassifier serialization models via Python utilities. To guarantee data ingestion compatibility and prevent key-mapping runtime exceptions, the backend data models and the frontend form input controllers must strictly mirror the typographical parameters of the training datasets, specifically:
     *   'Temparature' (utilizing the typographical 'a' in the second syllable)
     *   'Humidity ' (containing a mandatory trailing space within the parameter string)
     *   'Moisture'
@@ -36,16 +38,17 @@ List the key planned deliverables of the project to be produced during the devel
     *   'Nitrogen'
     *   'Potassium'
     *   'Phosphorous' (spelled with an 'o' before 'u')
-*   **Deliverable 3 (Integrations & Ledger Core):**  
-    A backend service architecture integrating third-party APIs and a decentralized blockchain ledger:
-    *   *Weather API Client:* A REST connection to OpenWeatherMap querying latitude ('lat') and longitude ('lon') parameters to extract temperature, humidity, pressure, wind speed, and conditions.
+*   **Deliverable 5 (AI & Weather Cognitive Advisory Layers):**  
+    A backend cognitive integration pipeline connecting to external diagnostic systems:
+    *   *Weather Client:* A REST connection to OpenWeatherMap querying latitude ('lat') and longitude ('lon') parameters to extract live temperature, humidity, pressure, and conditions.
     *   *AI Generation Client:* A connection to Google Gemini Version Two Flash passing real-time weather and crop types to generate advice in the following exact format:
         *   💧 WATERING: (Yes/No) - (4-5 words reason)
         *   🌱 FERTILIZER: (Good/Wait) - (4-5 words reason)
         *   🐛 PEST RISK: (Low/Medium/High) - (3-4 words)
         *   ✅ TIP: (one 5-8 word sentence)
     *   *Pesticide Database:* A rule-based lookup database mapping crop names and disease symptoms using fuzzy text search matches for keywords (including blast, brown spot, stem borer, leaf folder, rust, mildew, armyworm, bollworm, whitefly, aphid, leaf miner, fruit borer), mapping specific crop families to generic 'vegetable' treatment logic, and defaulting to a Neem Oil protocol if no direct match is found.
-    *   *Blockchain Auditing Ledger:* A Web3 RPC client executing Sepolia smart contract interactions. The system will invoke the smart contract function logRecommendation to sign and send transactions. It will support contract query calls and implement a soft fallback wrapper so that a failure in the Ethereum Sepolia network will not block API execution threads or return errors to the mobile user.
+*   **Deliverable 6 (Auditable Blockchain Smart Contract Ledger):**  
+    A Web3 RPC gateway integrated into the Django backend to connect with the Sepolia Ethereum testnet. The system will sign and broadcast transaction receipts via the logRecommendation smart contract function, tracking recommendation parameters and raw query JSON inputs. Query functions (such as reading logs by index or checking total counts) will be exposed to the client, while all transactions are wrapped in a non-blocking asynchronous architecture to prevent blockchain mining latency from delaying REST API HTTP responses.
 
 ---
 
