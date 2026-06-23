@@ -13,3 +13,5 @@
 !/agro_smart_high_level_design.md
 !/agro_smart_low_level_design.md
 !.gitignore
+!/architecture_decision_record_template.md
+!/adr_*.md
