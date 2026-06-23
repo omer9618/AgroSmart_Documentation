@@ -71,7 +71,16 @@ All test cases are detailed in table formats, providing preconditions, specific 
 
 ---
 
-## 7. External Integrations, Weather & LLM Test Cases
+## 7. Pesticide Knowledge Base & Search Test Cases
+
+| Test Case ID | Target Requirement | Verification Objective | Preconditions | Input Data / Parameters | Step-by-Step Execution | Expected Output | Actual Result |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **TC-PE-01** | BRD-FR-007 | Verify fuzzy symptomatology lookup. | Pesticide lookup database is loaded in memory. | Crop: `rice`, Problem: `leaves have brown spots with gray centers` | 1. Initialize API client.<br>2. Submit POST request to pesticide endpoint.<br>3. Capture JSON response payload. | Response returns pesticide `Mancozeb 75% WP` in under two seconds. | **PASSED** (Verified fuzzy symptom search returns Mancozeb 75% WP for brown spot keyword, matches run `TC-03`) |
+| **TC-PE-02** | BRD-FR-007 | Verify fallback default organic Neem Oil protocol. | Pesticide lookup database is loaded in memory. | Crop: `cotton`, Problem: `leaves look weird and are turning gray` | 1. Initialize API client.<br>2. Submit POST request to pesticide endpoint with unrecognized symptom description.<br>3. Capture JSON response payload. | Response returns default fallback organic `Neem Oil (Organic)` recommendation. | **PASSED** (Verified fallback default organic Neem Oil protocol when description does not match keyword patterns, matches backend API test run) |
+
+---
+
+## 8. External Integrations, Weather & LLM Test Cases
 
 | Test Case ID | Target Requirement | Verification Objective | Preconditions | Input Data / Parameters | Step-by-Step Execution | Expected Output | Actual Result |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -82,7 +91,7 @@ All test cases are detailed in table formats, providing preconditions, specific 
 
 ---
 
-## 8. Performance & Device Compatibility Test Cases
+## 9. Performance & Device Compatibility Test Cases
 
 | Test Case ID | Target Requirement | Verification Objective | Preconditions | Input Data / Parameters | Step-by-Step Execution | Expected Output | Actual Result |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -93,10 +102,10 @@ All test cases are detailed in table formats, providing preconditions, specific 
 
 ---
 
-## 9. Test Execution Results & Summary Log
+## 10. Test Execution Results & Summary Log
 The following logs record the staging test execution data, performance profiles, and acceptance validation runs compiled during testing.
 
-### 9.1 Functional Verification Metrics
+### 10.1 Functional Verification Metrics
 The platform functions were validated against expected requirements targets:
 
 | Test ID | Feature Tested | Request Payload | Expected Result | Actual Result | Status |
@@ -108,7 +117,7 @@ The platform functions were validated against expected requirements targets:
 | **TC-05** | Missing Field Validation | `{"N":90,"P":42,"K":43}` (missing ph) | HTTP 400 error | HTTP 400 received | Pass |
 | **TC-06** | Invalid Data Type | `{"N":"abc", "P":42,...}` | HTTP 400 error | HTTP 400 received | Pass |
 
-### 9.2 Subsystem Integration Metrics
+### 10.2 Subsystem Integration Metrics
 The interfaces connecting frontend UI, database, queues, and blockchain platforms were verified:
 
 | Test ID | Components Tested | Expected Result | Actual Result | Status |
@@ -120,7 +129,7 @@ The interfaces connecting frontend UI, database, queues, and blockchain platform
 | **IT-05** | Backend $\leftrightarrow$ Ethereum Sepolia | Transaction hash appears in logs | Blockchain transaction sent: 0x... | Pass |
 | **IT-06** | GitHub $\leftrightarrow$ Azure CI/CD | Workflow triggers and deploys | Green checkmark in Actions tab | Pass |
 
-### 9.3 Security Controls Metrics
+### 10.3 Security Controls Metrics
 The platform access configurations and data exposure boundaries were audited:
 
 | Test ID | Security Aspect | Expected Result | Actual Result | Status |
@@ -131,7 +140,7 @@ The platform access configurations and data exposure boundaries were audited:
 | **ST-04** | Secrets Exposure | No API keys visible in response | Only status and message returned | Pass |
 | **ST-05** | SQL Injection Prevention | Normal response, no crash | Request processed normally | Pass |
 
-### 9.4 Deployment & Availability Metrics
+### 10.4 Deployment & Availability Metrics
 System uptime and compatibility checkouts were validated:
 
 | Test ID | What Was Tested | Expected Result | Actual Result | Status |
@@ -142,7 +151,7 @@ System uptime and compatibility checkouts were validated:
 | **DT-04** | Application Uptime | 10 requests over 10 minutes all succeed | All 200 OK | Pass |
 | **DT-05** | Mobile Device Accessibility | App works over mobile data | Connected and returned results | Pass |
 
-### 9.5 Performance Averages & Response Speeds
+### 10.5 Performance Averages & Response Speeds
 The endpoint execution latency profiles under normal and concurrent load are recorded below:
 
 | Endpoint | Minimum (ms) | Average Response Time (ms) | Maximum (ms) | Status |
@@ -155,7 +164,7 @@ The endpoint execution latency profiles under normal and concurrent load are rec
 
 *Load Test Note: Concurrent Load Test (10 requests to `/api/crop/`) yielded a 100% success rate with an average response time of 145ms.*
 
-### 9.6 User Acceptance Validation (UAT)
+### 10.6 User Acceptance Validation (UAT)
 A panel of rural farmers and review inspectors executed key workflow checkouts:
 
 | Task Given to User | Completed Without Help? | Feedback Summary |
@@ -169,7 +178,7 @@ A panel of rural farmers and review inspectors executed key workflow checkouts:
 
 *UAT Summary: All tasks were completed without assistance. The user explicitly confirmed that the ecosystem successfully addresses the core problem statement.*
 
-### 9.7 Decentralized Ledger Commits
+### 10.7 Decentralized Ledger Commits
 The smart contract details and validation receipt hashes are detailed below:
 
 | Parameter | Value |
@@ -181,7 +190,7 @@ The smart contract details and validation receipt hashes are detailed below:
 | **Network** | Sepolia Testnet |
 | **Etherscan Link** | Transaction Details (Etherscan lookup pages) |
 
-### 9.8 Testing General Summary
+### 10.8 Testing General Summary
 Overall quality pass metrics across categories:
 
 | Test Category | Tests Run | Passed | Failed | Pass Rate |
