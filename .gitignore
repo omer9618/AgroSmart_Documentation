@@ -15,3 +15,4 @@
 !.gitignore
 !/architecture_decision_record_template.md
 !/adr_*.md
+!/agro_smart_master_test_plan.md
