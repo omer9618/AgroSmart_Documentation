@@ -80,7 +80,7 @@ The testing team shall execute comprehensive functional and non-functional tests
 #### Exclusions
 The following system components are explicitly excluded from validation tasks under this Master Test Plan:
 *   **Third-Party Web3 Gateways**: Verification of the public Infura connection infrastructure. The testing division will simulate blockchain interactions using localized mocks to avoid gas cost overheads and RPC latency.
-*   **Firebase Authentication Servers**: Verification of external Firebase server uptime. Testing will rely on mocking the token generation and validation interfaces.
+*   **Firebase Authentication Core Hosting Infrastructure**: Verification of external Firebase server hosting and network uptime. The testing division will rely on mocking the remote validation endpoints to bypass external hosting latency. However, all client-side authentication wrappers, secure storage handlers, and local state validation functions remain fully in-scope.
 *   **Meteorological Data Services**: Real-time reliability testing of OpenWeatherMap servers. The API responses will be stubbed with predefined weather matrices.
 *   **Public Blockchain Network Nodes**: Core consensus protocols on the Sepolia Ethereum network. Testing boundaries stop at verified transaction broadcast interfaces.
 
@@ -150,14 +150,14 @@ The test milestones are aligned with the 2-week Agile Sprint cadence:
 *   **Integration Cycle Run**: Initiated on Sprint Day 8.
 *   **System Testing Run**: Executed between Sprint Days 10 and 11.
 *   **User Acceptance Sign-off**: Achieved by Sprint Day 13.
-*   **Deployment Release Release Gate**: Closed by Sprint Day 14.
+*   **Deployment Release Gate**: Closed by Sprint Day 14.
 
 #### 1.5.3 Integrity Level Schema
 Software components are categorized into four critical tiers, with testing rigor scaling proportionally:
 
 | Integrity Level | Criticality Classification | System Components | Quality Target Metrics |
 | :--- | :--- | :--- | :--- |
-| **Level 4** | Safety / Audit Critical | Asynchronous Blockchain Syncing Pipeline, Firebase Auth, Database Encryption Services | 100% statement coverage; mandatory independent review of verification logs; zero unresolved severity 1 or 2 anomalies. |
+| **Level 4** | Safety / Audit Critical | Asynchronous Blockchain Syncing Pipeline, Client-Side Firebase Authentication Hooks & Local Token Encryptors, Database Encryption Services | 100% statement coverage; mandatory independent review of verification logs; zero unresolved severity 1 or 2 anomalies. |
 | **Level 3** | High Impact Operations | Crop & Fertilizer Prediction Models, Django API Serializers, API Gateway Controllers | Minimum 90% statement coverage; 100% test automation of primary transaction paths. |
 | **Level 2** | Medium Operational Impact | Local SQLite Caches, Fuzzy Search Controllers, User Profile Management Views | Minimum 80% statement coverage; automated integration test verification. |
 | **Level 1** | Low Operational Impact | Easy Localization Switching UI, Static Assets, Help Guides | Minimum 70% statement coverage; manual validation of layouts and localization switches. |
@@ -324,9 +324,11 @@ All validation activities must produce standardized documentation that aligns wi
 *   **Level Test Plans**: Defined for Integration and System test phases, mapping to Clause 9.
 *   **Level Test Design Documents**: Detailing exact test cases, parameters, and expected results, mapping to Clause 10.
 *   **Level Test Cases & Procedures**: Documenting manual test steps and automated script profiles, mapping to Clauses 11 and 12.
-*   **Test Log Documents**: Structured reports generated from automated testing runs, mapping to Clause 14.
-*   **Anomaly Reports**: Detailed records logging failed test cases, mapping to Clause 15.
-*   **Master Test Report**: The final release document summarizing testing results, mapping to Clause 16.
+*   **Test Log Documents**: Structured reports generated from automated testing runs, mapping to Clause 13.
+*   **Anomaly Reports**: Detailed records logging failed test cases, mapping to Clause 14.
+*   **Level Interim Test Status Reports**: Summarized status templates reporting on progress, mapping to Clause 15.
+*   **Level Test Reports**: Phase-specific quality reports summarizing level compliance, mapping to Clause 16.
+*   **Master Test Report**: The final release document summarizing testing results, mapping to Clause 17.
 
 ---
 
@@ -415,4 +417,4 @@ Amendments to this Master Test Plan must follow the change control procedures be
 | Change ID | Version | Description of Changes | Reason for Change | Author Name | Author Role |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | CHG-001 | 0.1 | Initial draft creation. | Project kickoff. | Tariq Mahmood | QA Specialist |
-| CHG-002 | 1.0 | Finalized document and completed approvals block. | Ready for baseline commit. | Muhammad Omer Siddiqui | Lead Architect |
+| CHG-002 | 1.0 | Finalized document and completed approvals block. | Approved Final baseline release. | Muhammad Omer Siddiqui | Lead Architect |
