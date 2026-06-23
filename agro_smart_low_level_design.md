@@ -48,7 +48,11 @@
    - 3.2 [Server Side](#32-server-side)
      - 3.2.1 [Controller and Service Class Specifications](#321-controller-and-service-class-specifications)
      - 3.2.2 [Model and Database Specifications](#322-model-and-database-specifications)
-4. [References](#references)
+4. [System Diagrams](#4-system-diagrams)
+   - 4.1 [Use Case Diagram](#41-use-case-diagram)
+   - 4.2 [Sequence Diagrams](#42-sequence-diagrams)
+   - 4.3 [Entity Relationship Diagram (ERD)](#43-entity-relationship-diagram-erd)
+5. [References](#5-references)
 
 ---
 
@@ -411,6 +415,100 @@ classDiagram
 
 ---
 
-## 4. References
+## 4. System Diagrams
+
+### 4.1. Use Case Diagram
+
+The use case diagram illustrates the primary actors and their interactions with the AgroSmart system.
+
+```mermaid
+graph LR
+    subgraph AgroSmart System
+        UC1(Authenticate & Login)
+        UC2(Input Soil/Weather Metrics)
+        UC3(Receive Crop/Fertilizer Recommendation)
+        UC4(Input Pesticide Symptoms)
+        UC5(Receive Weather Advisory)
+        UC6(View Audit Logs)
+        UC7(Verify Blockchain Transaction)
+    end
+    
+    F[Farmer] --> UC1
+    F --> UC2
+    F --> UC3
+    F --> UC4
+    F --> UC5
+    
+    SRI[Scientific Review Inspector] --> UC1
+    SRI --> UC6
+    SRI --> UC7
+```
+
+### 4.2. Sequence Diagrams
+
+#### 4.2.1. Soil Recommendation & Blockchain Logging
+
+This sequence diagram depicts the process flow of a farmer submitting soil metrics, the backend generating a recommendation, and the Celery worker writing the audit log to the blockchain asynchronously.
+
+```mermaid
+sequenceDiagram
+    actor Farmer
+    participant MobileApp as Mobile Client
+    participant API as Django Backend API
+    participant ML as MLInferenceManager
+    participant DB as PostgreSQL (AuditDatabaseManager)
+    participant Celery as Celery Worker
+    participant Eth as Sepolia Ethereum RPC
+
+    Farmer->>MobileApp: Submits soil metrics (N,P,K,pH,etc.)
+    MobileApp->>API: POST /api/recommend/crop {metrics}
+    API->>ML: predictRecommendedCrop(metrics)
+    ML-->>API: Returns "Wheat"
+    API->>DB: writeAuditLog(..., status="Pending Sync")
+    DB-->>API: logId = 101
+    API->>Celery: logRecommendation.delay(101, "Crop", "Wheat", inputs)
+    API-->>MobileApp: Returns Response {Recommendation: "Wheat", status: "Pending Sync"}
+    MobileApp-->>Farmer: Displays Recommendation
+    
+    Celery->>Eth: Broadcast Transaction (signed payload)
+    Eth-->>Celery: Returns txHash (0x123...)
+    Celery->>DB: updatePostgresAuditStatus(101, "0x123...", "Synchronized")
+```
+
+### 4.3. Entity Relationship Diagram (ERD)
+
+The ERD models the core database entities and their relational cardinality in the PostgreSQL database.
+
+```mermaid
+erDiagram
+    USER ||--o| PROFILE : "has"
+    USER {
+        int id PK
+        string username
+        string email
+        string password
+    }
+    PROFILE {
+        int id PK
+        int user_id FK
+        string fullName
+        string phoneNumber
+    }
+    USER ||--o{ RECOMMENDATION_AUDIT_LOG : "creates"
+    RECOMMENDATION_AUDIT_LOG {
+        int id PK
+        int user_id FK
+        string queryType
+        string inputPayload
+        string outputResult
+        string blockchainTxHash
+        string syncStatus
+        string timestamp
+    }
+```
+
+---
+
+## 5. References
 *   [1] Bruegge, B. & Dutoit, A. H. (2004). *Object-Oriented Software Engineering, Using UML, Patterns, and Java, 2nd Edition*. Prentice-Hall. ISBN: 0-13-047110-0.
 *   [2] ISO/IEC/IEEE 29148:2018. *Systems and software engineering — Life cycle processes — Requirements engineering*.
