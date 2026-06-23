@@ -10,5 +10,5 @@
 !/functional_specification_document_template.md
 !/non_functional_requirements.md
 !/requirements_traceability_matrix.md
-!/distributed_network_traffic_controller_hld.md
+!/agro_smart_high_level_design.md
 !.gitignore
