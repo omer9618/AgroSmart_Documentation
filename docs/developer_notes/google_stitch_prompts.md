@@ -1,204 +1,182 @@
-# AgroSmart Google Stitch UI/UX Prompts
+# AgroSmart Google Stitch UI/UX Prompts (Modern Minimalist Edition)
 
-This document provides a set of highly structured, professional Google Stitch prompts for each screen in the **AgroSmart** mobile application. These prompts are designed using the **"Zoom-Out-Zoom-In"** framework to help Google Stitch (or similar tools like v0.dev) generate premium, visually stunning, and highly functional agricultural interfaces.
+This document provides a set of highly structured, professional Google Stitch prompts for each screen in the **AgroSmart** mobile application. These prompts have been fully redesigned from scratch to follow a premium **Modern Minimalist** design aesthetic, emphasizing clean layouts, generous whitespace, strict typographic hierarchy, and single-accent focal points.
 
 ---
 
 ## 🎨 Global Design System & Brand Identity
-To ensure consistency across all generated screens, Google Stitch prompts should inherit the following visual guidelines:
-*   **Color Palette:** Sleep Forest Green (`#1B5E20`), Leaf Emerald (`#2E7D32`), Mint Green (`#A5D6A7`), Warm Sand (`#F5F5DC`), and Golden Sand (`#FFD54F`) for accents.
-*   **Visual Style:** Glassmorphism overlay panels (frost transparency, border highlight, shadow depth), curved container corners (`border-radius: 20px`), clean micro-shadows, and high contrast text.
-*   **Typography:** Modern typography using *Montserrat* or *Outfit* for headings, and *Inter* or *Roboto* for high-legibility body content.
-*   **Demographic Focus:** High visual clarity (prominent visual icons, large tap targets, intuitive layout) to support rural farmers with varying digital literacy.
+To ensure absolute visual cohesion across all generated screens, Google Stitch prompts inherit the following minimalist guidelines:
+*   **Color Palette:** Monochromatic bases. Pure White (`#FFFFFF`) and warm off-white (`#F9F9FB`) for clean backgrounds. Slate grey (`#71717A`) for borders and description text. Dark graphite (`#18181B`) for primary headings. Use a single vibrant organic emerald green (`#10B981`) *very sparingly* as the sole accent color for active navigation states, success indicators, and primary call-to-actions.
+*   **Visual Style:** Completely flat layout. Zero gradients, zero glassmorphic transparency, and zero heavy multi-colored cards. Container borders are thin and clean (`1px` solid, `#E4E4E7` or `#E5E7EB`). Flat card structures have zero elevation or a faint, subtle layout shadow. Corners must be tight and sharp with a maximum border-radius of `8px` to `12px`.
+*   **Typography:** Modern, structural sans-serif (*Inter* or *SF Pro*). Strict size hierarchy: large, bold, black headings for primary context, and small, high-density metadata fields in muted gray.
+*   **Whitespace:** Generous spacing (`24px` to `32px` block padding) between content blocks to create a highly legible, premium editorial feel.
+*   **Demographic Focus:** High readability, clean high-contrast elements, and highly legible text fields to assist rural farmers with differing digital literacy without using cluttered layouts.
 
 ---
 
 ### 1. Splash Screen
-**Inspiration:** *Headspace & Duolingo* (calming, playful, sleek transition loaders)
+**Inspiration:** *Linear & Apple* (monochromatic, high-contrast, pure minimalism, crisp lines)
 
 ```text
-Create a splash screen for a modern agricultural mobile app called "AgroSmart". The design should feel premium, sleek, and immediately welcoming. 
+Create a splash screen for a modern agricultural mobile app called "AgroSmart". The design must follow a strict modern minimalist aesthetic.
 
-- BACKGROUND: Use a beautiful, smooth gradient starting from deep forest green (#1B5E20) at the top-left, blending into a vibrant leaf emerald green (#2E7D32) and soft mint (#A5D6A7) at the bottom-right. Incorporate a subtle, semi-transparent organic vector pattern of leaf veins or soil topology lines in the background.
-- LOGO: Centered on the screen. A glowing, floating circular emblem with a minimalist white outline of a plant leaf merging with a futuristic digital circuit/sensor icon.
-- TITLE: Below the logo, display the title "AgroSmart" in bold, elegant typography (Montserrat font) in bright white, with wide letter spacing (2px) and a soft drop shadow.
-- SUBTITLE: Below the title, show "Intelligent Crop Advisory System" in a glassmorphic capsule overlay with white-70% text.
-- LOADING STATUS: Near the bottom, a clean, thin horizontal loading progress bar (100% border-radius, pure white) indicating "Checking authentication..." with a pulsing 3-dot micro-animation.
-- FOOTER: Pinned at the very bottom, "Version 1.0.0 | Spring 2026" in tiny, low-opacity white text.
+- BACKGROUND: Solid, clean off-white (#F9F9FB) with zero gradients, patterns, or image overlays.
+- LOGO: Centered on the screen. A thin, single-line-art vector emblem of a plant seedling emerging from a sharp vertical grid line, drawn in graphite gray (#18181B). No gradients, glow, or 3D effects.
+- TITLE: Located below the logo, display the title "AgroSmart" in clean, bold, high-contrast black typography (using the Inter font). Keep the letters sharp with normal letter-spacing, without shadow or glow effects.
+- SUBTITLE: Below the title, show "Intelligent Crop Advisory" in muted slate gray (#71717A) with regular font weight and small typography.
+- LOADING STATUS: Near the bottom, a single, ultra-thin horizontal line (2px height, #E4E4E7 background) acting as a loading bar, with the left portion filled with a solid, vibrant emerald green (#10B981) indicating progress. Above it, show "Connecting..." in small, muted gray text.
+- FOOTER: Pinned to the very bottom, "v1.0.0" in tiny, low-opacity monospace text.
 ```
 
 ---
 
 ### 2. Login & Registration Screen
-**Inspiration:** *Spotify & Airbnb* (immersive backgrounds, glassmorphic card forms, fluid toggles)
+**Inspiration:** *Vercel & Stripe* (flat layouts, thin borders, inline active states)
 
 ```text
-Design a hybrid Login and Sign-Up screen for the "AgroSmart" app. The design must handle a looping background video of green wheat fields swaying under a sunny sky.
+Design a hybrid Login and Sign-Up screen for the "AgroSmart" app following a modern minimalist design. Do not use video backgrounds, background images, or glassmorphic transparency.
 
-- STRUCTURE: Enable a dark, semi-transparent overlay gradient (gradient from black-40% at the top to black-80% at the bottom) over the background to keep the forms legible. 
-- LANGUAGE TOGGLE: In the top-right corner, place a small floating button using a glassmorphic capsule design (border-radius: 30) featuring a globe icon and showing "🇬🇧 EN | 🇵🇰 اردو" to switch languages instantly.
-- FORM CONTAINER: A large, centered glassmorphic card (frosted background, white border with 30% opacity, rounded corners 30px) that hovers elegantly.
+- STRUCTURE: The entire screen uses a flat, neutral light gray background (#F4F4F5).
+- LANGUAGE TOGGLE: In the top-right corner, place a small, flat text button with a thin border (1px solid #E4E4E7, border-radius: 6px) showing "EN | UR" to switch languages.
+- FORM CONTAINER: A flat white card container centered on the screen with a thin border (1px solid #E4E4E7) and tight corners (border-radius: 8px). No shadow or background gradient.
 - CONTENT INSIDE CARD:
-  - An agricultural icon (green leaf/sprout) in a circular overlay.
-  - A clean title: "Welcome to AgroSmart" (or "Create Account" depending on mode).
-  - INPUT FIELDS: Transparent inputs with white outlines (1.5px thickness). Border turns solid white on focus, and soft red on validation error. Prefix icons (person, email, lock) are white-90%.
-  - PASSWORD FIELD: Includes a toggle icon (eye/eye-off) to show/hide the password. When in Sign-Up mode, show a micro-checklist of strong password rules (e.g., "8+ characters", "1 uppercase", "1 number", "1 special char") that light up in mint green when met.
-  - BUTTON: A prominent, solid green button (#2E7D32) with a bold white text "Login" / "Register".
-  - TOGGLE LINK: At the bottom, a text button "Don't have an account? Sign Up" to transition screens.
-- MOBILE FRIENDLY: Do not resize the background video when the virtual keyboard opens.
+  - Header: A bold title "Welcome to AgroSmart" (or "Create Account" depending on mode) in dark graphite (#18181B) with a small, flat leaf icon next to it.
+  - INPUT FIELDS: Flat text inputs with a thin light-gray border (1px solid #E4E4E7, border-radius: 8px). On focus, the border turns sharp dark-gray (#18181B). If validation fails, the border turns thin red. Placeholders are in light gray (#A1A1AA). Prefix icons (person, email, lock) are drawn in thin dark gray outline style.
+  - PASSWORD FIELD: Includes a simple text-based button "Show" / "Hide" inside the right edge of the input. When in Sign-Up mode, show a small, clean list of validation checks below the input, colored green (#10B981) when valid, and muted gray when invalid.
+  - PRIMARY ACTION: A solid emerald green button (#10B981) with bold white text, sharp corners (border-radius: 8px), and zero gradient. Text: "Login" or "Register".
+  - TOGGLE LINK: At the bottom, a flat text button "Don't have an account? Sign Up" in slate gray.
 ```
 
 ---
 
 ### 3. Home Screen / Main Dashboard
-**Inspiration:** *Apple Health & Robinhood* (visual grids, card summary widgets, personalized headers)
+**Inspiration:** *Linear Dashboard & Airbnb* (editorial whitespace, high contrast, clean list grids)
 
 ```text
-Design a gorgeous, high-performance dashboard screen for the "AgroSmart" app tailored to farmers.
+Design a clean, modern minimalist dashboard screen for the "AgroSmart" app tailored to farmers. 
 
-- HEADER SYSTEM:
-  - Top app bar with a gradient background (deep green to light emerald). Includes the app title, a floating language switcher capsule, and a History icon showing a small red badge containing the count of saved diagnostics.
-  - Below, a welcome banner with a profile avatar: "Welcome back," and the farmer's name in bold white.
-- HERO BANNER:
-  - A swipeable visual carousel or card depicting "Smart Farming: AI-Powered Agricultural Insights". Background uses a premium organic photo of a healthy crop field with a glassmorphic dark-green overlay text box.
-- STATS WIDGETS:
-  - A horizontal row displaying two statistics cards: "Recent Queries (5)" with a clock icon, and "Offline Mode (Sync Ready)" in soft blue showing that data is stored locally.
-- QUICK ACTIONS / MENU CARDS:
-  - Create a 2x2 grid or a vertical list of large cards for the core services:
-    1. "Crop Recommendation": Input soil metrics to discover the best crops. Icon: green leaf. BG image: wheat fields.
-    2. "Fertilizer Advisory": Calculate soil nutrients. Icon: test tube. BG image: modern soil testing.
-    3. "Pesticide Diagnosis": Scan/describe crop symptoms. Icon: ladybug. BG image: leaf diagnosis.
-    4. "Weather Smart Tips": Real-time AI advisory. Icon: sun and rain. BG image: misty hills.
-  - Each service card must feature a high-quality relevant image, a semi-transparent dark overlay, a clean white header, a short subtext description, and a round arrow-forward icon in the corner.
-- NAVIGATION: Pinned bottom navigation bar with icons for Home, History, and Settings.
+- APP BAR: Pinned white header with a thin bottom border (1px solid #E4E4E7). Features the app title "AgroSmart" in clean black text, a flat language switch button ("EN/UR"), and a simple outline History icon on the right with a small, flat green dot if there are new diagnostics.
+- HEADER WELCOME: Below the app bar, a clean greeting block with generous vertical padding: "Good morning," followed by the farmer's name in bold black text. No avatars or colored backgrounds.
+- HERO STATS ROW: A flat row of key dashboard statistics separated by thin vertical gray lines:
+  - "Recent Queries" showing "5 saved"
+  - "Offline Mode" showing "Ready (Local Sync)"
+- SERVICE TILES: A vertical stack or 2x2 grid of flat, white cards with thin borders (1px solid #E4E4E7, border-radius: 8px). No background images or gradients. Each card features:
+  - A small, clean outline-style green icon in the corner.
+  - A short bold title (e.g., "Crop Recommendation", "Fertilizer Advisory", "Pesticide Diagnosis", "Weather Smart Tips").
+  - A single-line description in muted gray text (#71717A).
+  - A tiny flat arrow pointing right.
+- BOTTOM NAVIGATION: Pinned bottom bar with a white background and a thin top border (1px solid #E4E4E7). Contains simple outline icons for Home, History, and Settings. The active tab is highlighted in emerald green (#10B981) with a thin green horizontal line above the active icon.
 ```
 
 ---
 
 ### 4. Crop Input (Soil Data Diagnosis) Screen
-**Inspiration:** *Yara FarmCare & Clean Tech Dashboards* (interactive slider inputs, guidance overlays)
+**Inspiration:** *Tailwind UI Forms & Apple Health* (dense but clean inputs, flat inline warnings)
 
 ```text
-Create a form screen for "Crop Recommendation" soil variable input in the "AgroSmart" app. 
+Create a minimalist form screen for "Crop Recommendation" soil variable input in the "AgroSmart" app.
 
-- APP BAR: Clean green background, back arrow, title "Soil Crop Diagnosis", and language switcher toggle.
-- SOIL DATA GUIDE (INFO CARD):
-  - A sticky banner at the top in soft mint green (#E8F5E9) with a green border and info icon. It lists the typical, safe agronomic boundaries: "N: 0-140, P: 0-145, K: 0-205, pH: 0-14, Temp: 0-50°C, Humidity: 0-100%, Rainfall: 0-300mm".
-- INPUT FORM:
-  - 7 input fields for: Nitrogen (N), Phosphorus (P), Potassium (K), Soil pH, Temperature (°C), Humidity (%), and Rainfall (mm).
-  - INPUT WIDGETS: Each input field features a clear labeled title, numeric keypad trigger, prefix icon (e.g. droplet, thermometer, science beaker), and a small info bubble button. Tapping the bubble triggers a floating tooltip explaining the role of that nutrient.
-- OPTIMIZED INTERACTION: Instead of raw textboxes, the key values (like pH or Temperature) can also be tweaked using horizontal range sliders, with colored zones indicating "low", "optimal", and "high" ranges.
-- SUBMIT ACTION: A sticky, floating bottom button "Get Crop Recommendation" that lights up in solid emerald when the form is valid, showing a spinning green wheel when executing API inference.
+- APP BAR: Solid white background with a thin bottom border (1px solid #E4E4E7), back arrow, screen title "Crop Soil Input" in black, and flat language toggle.
+- SOIL GUIDE BANNER: A flat, light green-tinted info card at the top (#F0FDF4 background, 1px solid border #DCFCE7, border-radius: 8px). It lists the typical, safe agronomic boundaries: "N: 0-140, P: 0-145, K: 0-205, pH: 0-14, Temp: 0-50°C, Humidity: 0-100%, Rainfall: 0-300mm" in clean green text (#15803D).
+- INPUT FIELDS: A clean vertical list of 7 input fields: Nitrogen (N), Phosphorus (P), Potassium (K), Soil pH, Temperature (°C), Humidity (%), and Rainfall (mm).
+  - Each input field has a bold title label, a thin border (1px solid #E4E4E7, border-radius: 8px), and a small unit indicator text (e.g. "ppm", "pH", "°C", "%", "mm") on the right.
+  - A small question mark icon next to each label triggers a simple flat inline tip box explaining the role of that nutrient. No sliders, overlays, or gradients.
+- SUBMIT ACTION: A flat, solid green button (#10B981) at the bottom: "Get Crop Recommendation". Shows a minimal spinning line indicator when loading.
 ```
 
 ---
 
 ### 5. Fertilizer Input Screen
-**Inspiration:** *John Deere Operations Center* (hybrid select grids, agricultural parameter inputs)
+**Inspiration:** *Figma UI & Stripe Dashboard* (segmented text controls, nested select inputs)
 
 ```text
-Design the "Fertilizer Advisory" input screen for the "AgroSmart" app.
+Design the "Fertilizer Advisory" input screen for the "AgroSmart" app using modern minimalist style.
 
-- APP BAR: Green app bar with a back arrow, screen title "Fertilizer Predictor", and English/Urdu switcher.
-- NUTRIENT ADVISORY PANEL:
-  - An expandable info box at the top labeled "Fertilizer Soil Guide" with a detailed card summarizing typical values for Temperature, Humidity, Moisture, N, P, and K.
-- DROPDOWN SELECTORS:
-  - "Soil Type": A horizontal scrollable list of visual card chips with icons representing Sandy, Loamy, Black, Red, and Clayey soils. Tapping a chip highlights it in emerald green with a checkmark.
-  - "Crop Type": A dropdown or grid selector of primary crops (Maize, Sugarcane, Cotton, Tobacco, Paddy, Wheat, Barley) with miniature crop icons.
-- NUMERIC PARAMETERS:
-  - Vertical list of text fields with rounded borders (10px) and clean icons for:
-    - Temperature (°C)
-    - Humidity (%)
-    - Moisture (%)
-    - Nitrogen (N)
-    - Potassium (K)
-    - Phosphorous (P)
-- CALL TO ACTION: A full-width, heavy-set green button at the bottom: "Get Fertilizer Mixture". When processing, the button changes to a progress spinner with text "Calculating optimal mix...".
+- APP BAR: Solid white background with a thin bottom border (1px solid #E4E4E7), back arrow, title "Fertilizer Input", and language selector.
+- PARAMETER GUIDE: A simple, thin-bordered white box containing bulleted typical values for soil parameters (Temp: 0-50°C, Humidity: 0-100%, Moisture: 0-100%, N, P, K).
+- SOIL TYPE SELECTOR: A row of flat, text-only chips (Sandy, Loamy, Black, Red, Clayey) with off-white backgrounds (#F4F4F5) and thin borders. Tapping a chip changes its border to solid dark-gray (#18181B) and text to black. No images or icons.
+- CROP SELECTOR: A simple dropdown field with a thin border containing maize, sugarcane, cotton, tobacco, paddy, wheat, and barley.
+- NUMERIC INPUTS: Simple stacked input fields with a thin border (1px solid #E4E4E7) and light-gray placeholders for Temperature (°C), Humidity (%), Moisture (%), Nitrogen (N), Potassium (K), and Phosphorus (P).
+- SUBMIT ACTION: A full-width, flat, solid green button (#10B981) at the bottom labeled "Get Fertilizer Advisory".
 ```
 
 ---
 
 ### 6. Pesticide Symptom Lookup Screen
-**Inspiration:** *Plantix & Apple Visual Search* (fuzzy-search autocomplete, tap-symptom cards)
+**Inspiration:** *Linear Search & Apple Spotlight* (inline chips, auto-filtering lists)
 
 ```text
-Design a "Pesticide Diagnosis & Symptom Lookup" interface for the "AgroSmart" app.
+Design a "Pesticide Diagnosis & Symptom Lookup" interface for the "AgroSmart" app following modern minimalist guidelines.
 
-- HEADER: App bar with back button, screen title "Pest & Disease Diagnosis", and Urdu translation trigger.
-- SYSTEM DIAGNOSIS GUIDE: A card at the top displaying "Pest Symptom Quick Guide" with visual indicators of common plant issues (e.g., "Brown spots on leaves", "White powdery mildew", "Insect bites").
+- APP BAR: Clean white background, thin bottom border, back button, title "Pest & Disease Diagnosis".
+- SYSTEM DIAGNOSIS GUIDE: A flat, light-gray box with a thin border listing common crop symptoms in bullet points (e.g. brown spots, mildew, insect damage).
 - FORM INPUTS:
-  - "Select Crop": An autocomplete text field with suggestions (rice, wheat, maize, cotton, sugarcane, etc.) that filters list options as the farmer types. Includes a leaf icon.
-  - "Describe Symptoms": A spacious text field (at least 3-4 lines tall) with a bug icon, placeholder text "Describe the problem (e.g., leaves have brown spots with gray centers)".
-- QUICK CHIPS SECTION:
-  - Below the symptom box, display a series of horizontal tap-chips for common symptoms so farmers don't have to type long descriptions: "Brown Spots 🌾", "Leaf Holes 🐛", "White Powder ❄️", "Tiny Bugs 🐜", "Fruit Holes 🍎". Tapping a chip automatically populates the text field.
-- BUTTON: A wide, high-contrast action button "Get Treatment Recommendation" styled with a safety-first shield icon.
+  - "Select Crop": A clean text field with a dropdown menu displaying matching suggestions as the user types.
+  - "Describe Symptoms": A spacious text field (3-4 lines) with a thin border (1px solid #E4E4E7, border-radius: 8px) and placeholder text "Describe the crop symptoms...".
+- QUICK SYMPTOM CHIPS: Below the text field, a series of small, flat text chips: "Brown Spots", "Leaf Holes", "White Powder", "Tiny Bugs", "Fruit Holes". Tapping a chip inserts the text.
+- SUBMIT ACTION: A flat, solid green button (#10B981) at the bottom labeled "Get Treatment Recommendation".
 ```
 
 ---
 
 ### 7. Weather & AI Advisory Screen
-**Inspiration:** *Yahoo Weather & Carrot Weather* (dynamic weather cards, conversational AI panels)
+**Inspiration:** *Simple Weather & Yahoo Finance* (clean layout, text coordinates inputs)
 
 ```text
-Design a "Weather-Based Farming Tips" screen that displays real-time weather metrics and localized agricultural advice.
+Design a "Weather-Based Farming Tips" screen that displays real-time weather metrics and localized agricultural advice using a modern minimalist style. Do not use color gradients based on weather conditions.
 
-- LOCATION SELECTOR:
-  - Toggle chip bar at the top: "Use GPS Location" vs "Enter Coordinates Manually".
-  - GPS CARD: When active, shows a card with a blinking satellite dish indicator and coordinates "📍 Islamabad (33.6844, 73.0479)". Features a large "Refresh GPS Location" button.
-  - MANUAL CARD: Features two adjacent text fields for Latitude and Longitude. Below the inputs, display a row of quick-select capsule buttons for cities: "Islamabad", "Lahore", "Karachi", "Multan".
-- CROP FIELD: An optional text input field labeled "Target Crop (Optional)" to tailor the weather advice.
-- CTA: A prominent button at the bottom "Get Weather Farming Tips".
-- LAYOUT STYLE: Rich, modern styling with glassmorphism overlays and background gradients that change according to the local weather condition (sunny = warm amber gradient, rainy = misty blue gradient).
+- HEADER LOCATION SELECTOR:
+  - A clean segmented control (tab switcher) at the top: "GPS Location" and "Enter Coordinates".
+  - GPS PANELS: Displays coordinates "Islamabad (33.6844, 73.0479)" inside a flat card with a thin border, featuring a small "Refresh" text button.
+  - MANUAL PANELS: Two clean, side-by-side text input fields for Latitude and Longitude. Below them, a row of text link shortcuts for cities: "Islamabad", "Lahore", "Karachi", "Multan".
+- CROP TYPE FIELD: A clean text field labeled "Target Crop (Optional)".
+- SUBMIT ACTION: A flat, solid green button (#10B981) at the bottom: "Get Weather Farming Tips".
+- LAYOUT: Solid off-white background. All weather metrics are displayed in high-contrast text and thin vector boxes.
 ```
 
 ---
 
 ### 8. Result & Diagnostic Report Screen
-**Inspiration:** *Duolingo (Celebration screens) & High-End Medical Labs* (success circles, structured tables, blockchain validation receipts)
+**Inspiration:** *Linear Issue Detail & Medical Lab Reports* (structural hierarchy, high density tabular outputs)
 
 ```text
-Create a multi-purpose "Diagnostic Result Screen" for the "AgroSmart" app. It displays the outcome of crop, fertilizer, pesticide, or weather advice.
+Create a multi-purpose "Diagnostic Result Screen" for the "AgroSmart" app following a modern minimalist design. 
 
-- TOP ACTION BAR: Green app bar with a back button, the title of the analysis, and a history shortcut button.
+- APP BAR: Clean white background, back button, title of the analysis.
 - HERO RESULT CARD:
-  - A elevated card with a dark-green gradient background (#1B5E20 to #2E7D32).
-  - Inside, a large white circular tick checkmark animation.
-  - Large bold white heading: "RECOMMENDED ACTION"
-  - Main result text in giant typography (28px) with a glowing shadow (e.g., "Recommended Crop: Rice", "Use Fertilizer: Urea", "Apply: Neem Oil").
-- ANALYSIS DETAILS ACCORDION:
-  - A white card displaying specific details under an info header:
-    - If Crop/Fertilizer: Shows a comparison table of "Inputs Provided" (Nitrogen, Phosphorus, pH, etc.) vs the system's target range.
-    - If Pesticide: Shows a red-shaded box summarizing "Pesticide Name", "Dosage (e.g., 5ml per liter)", "Application Method (Foliar spray)", and "Frequency (Every 7 days)".
-    - If Weather: Shows weather parameters (temp, humidity, wind) and a green-shaded custom text card containing the AI advisory sections: 💧 WATERING, 🌱 FERTILIZER, 🐛 PEST RISK, and ✅ TODAY'S TIP.
-- BLOCKCHAIN VERIFICATION TICKET:
-  - A specialized glassmorphism ticket at the bottom with a dashed-line divider. Displays "Security Audit Receipt: Sepolia Ethereum Network". Includes transaction status "Synchronized" in mint green, the Ethereum logo, and a direct hyperlink "Verify on Sepolia Etherscan".
+  - A flat white card with a thick green left border (4px solid #10B981) and thin gray borders on the other three sides.
+  - Small, uppercase label at the top: "RECOMMENDED ACTION" in slate gray (#71717A).
+  - Main result text in large, bold black typography (32px, e.g., "Crop: Rice", "Use: Urea", "Apply: Neem Oil").
+- ANALYSIS DETAILS TABLE:
+  - A clean data table with thin horizontal divider lines:
+    - If Crop/Fertilizer: Columns for "Nutrient", "Your Input", and "Optimal Range".
+    - If Pesticide: Clean text blocks for "Pesticide Name", "Dosage", "Application Method", and "Frequency".
+    - If Weather: Simple bulleted AI recommendations organized under headings: "Watering", "Fertilizer", "Pest Risk", and "Today's Tip".
+- BLOCKCHAIN VERIFICATION:
+  - A flat light-gray box (#F4F4F5) at the bottom with a dashed border. Displays "Security Audit Receipt: Sepolia Ethereum Network". Includes a monospace transaction hash and a link button "Verify on Etherscan".
 - BOTTOM BUTTONS:
-  - Two adjacent buttons: "Try Another Query" (grey, outline style) and "Save Record" (solid green, with checkmark).
+  - A row of two flat buttons: "Try Another Query" (white background, thin border, dark text) and "Save Record" (solid green background, white text).
 ```
 
 ---
 
 ### 9. Historical Logs / Audit Registry Screen
-**Inspiration:** *Revolut & Google Keep* (swipe-to-delete tiles, categorical filter chips, log drawers)
+**Inspiration:** *Github Commits List & Revolut* (clean list layout, flat tags, minimal action sheets)
 
 ```text
-Design the "Historical Diagnostics Registry" screen for the "AgroSmart" app.
+Design the "Historical Diagnostics Registry" screen for the "AgroSmart" app using a modern minimalist style.
 
-- HEADER: App bar with a back button, title "Diagnostic History", and a "Clear All" garbage-can button.
-- FILTER CHIPS: A sticky, horizontal scrolling row of category chips at the top:
-  - "All Records", "🌾 Crops", "🧪 Fertilizers", "🐛 Pesticides", "🌤️ Weather Tips". Selecting a chip highlights it in green.
-- LIST LAYOUT:
-  - A scrollable list of card items.
-  - Each item is a card showing:
-    - Left: A colored circular avatar with a custom icon depending on type (Crop = green grass icon, Fertilizer = orange test-tube, Pesticide = red bug, Weather = blue sun).
-    - Center: Main recommendation title (e.g., "Urea", "Wheat Recommendation") in bold text, with the date/time (e.g., "2 hours ago", "Jun 23, 2026") in grey.
-    - Right: A chevron icon inside a light-grey circle.
-- SWIPE ACTION: Sliding a log tile to the left reveals a red background with a trash bin icon, indicating swipe-to-delete.
-- LOG DETAILS MODAL (EXPANSION DRAWER):
-  - Tapping a log tile opens a modal dialog or slide-up bottom drawer.
-  - The drawer displays:
-    - The type tag (e.g., Fertilizer) in a colored chip.
-    - An inputs card displaying the raw numbers submitted by the farmer in a gray code-box.
-    - A outputs card displaying the advice returned by the system.
-    - A copy button and a delete button at the bottom of the drawer.
+- APP BAR: Pinned white header with a thin bottom border (1px solid #E4E4E7), back button, title "Diagnostic History", and a "Clear All" text button.
+- CATEGORICAL FILTER CHIPS: A horizontal scrolling row of simple text chips: "All", "Crops", "Fertilizers", "Pesticides", "Weather". Selected chips use a solid black background and white text. Unselected chips use an off-white background with a thin gray border.
+- HISTORICAL LIST:
+  - A stack of list items separated by thin horizontal divider lines (1px solid #E4E4E7).
+  - Each item displays:
+    - A simple label tag indicating the type (e.g. "[Crop]" or "[Fertilizer]").
+    - A bold title (e.g., "Wheat Recommendation") and a small, muted gray timestamp (e.g., "2 hours ago").
+    - A tiny arrow icon on the far right.
+- SWIPE ACTION: Swiping a tile to the left reveals a flat red bar containing the word "Delete".
+- DETAIL DRAWER / MODAL:
+  - Tapping a log item opens a clean modal sheet from the bottom.
+  - Shows two sections: "Submitted Inputs" and "System Output" in high-contrast text on flat light-gray backgrounds.
+  - Features two outline buttons: "Copy Output" and "Delete".
 ```
