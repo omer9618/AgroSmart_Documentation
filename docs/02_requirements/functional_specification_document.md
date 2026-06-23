@@ -84,9 +84,9 @@ This document specifies the functional details for the Minimum Viable Product (M
 ### 1.4 Related documents
 | Component | Name (with link to the document) | Description |
 | :--- | :--- | :--- |
-| Project Charter | [project_charter.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/project_charter.md) | Standardized project management baseline and constraints under ISO 21502:2020. |
-| Business Requirements | [business_requirements_document.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/business_requirements_document.md) | Business requirements, user groups, and the 20 core functional requirements. |
-| Technical Context | [project_context.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/project_context.md) | Technical constraints, dataset spelling conventions, and API structures. |
+| Project Charter | [project_charter.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/docs/01_initiation/project_charter.md) | Standardized project management baseline and constraints under ISO 21502:2020. |
+| Business Requirements | [business_requirements_document.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/docs/02_requirements/business_requirements_document.md) | Business requirements, user groups, and the 20 core functional requirements. |
+| Technical Context | [project_context.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/docs/developer_notes/project_context.md) | Technical constraints, dataset spelling conventions, and API structures. |
 
 ### 1.5 Terms/Acronyms and Definitions
 *   **easy_localization:** Flutter library used to manage English ('en') and Urdu ('ur') locale bundles natively on the mobile client.

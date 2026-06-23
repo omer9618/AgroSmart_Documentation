@@ -71,6 +71,6 @@ This matrix serves as the authoritative verification loop to ensure that all req
 ---
 
 ## 3. Related Documents
-*   **AgroSmart Business Requirements Document (BRD) Version 1.0:** [business_requirements_document.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/business_requirements_document.md)
-*   **AgroSmart Functional Specification Document (FSD) Version 1.0:** [functional_specification_document.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/functional_specification_document.md)
-*   **AgroSmart Non-Functional Requirements (NFR) Document Version 1.0:** [non_functional_requirements.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/non_functional_requirements.md)
+*   **AgroSmart Business Requirements Document (BRD) Version 1.0:** [business_requirements_document.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/docs/02_requirements/business_requirements_document.md)
+*   **AgroSmart Functional Specification Document (FSD) Version 1.0:** [functional_specification_document.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/docs/02_requirements/functional_specification_document.md)
+*   **AgroSmart Non-Functional Requirements (NFR) Document Version 1.0:** [non_functional_requirements.md](file:///c:/Users/Admin/.gemini/antigravity-ide/scratch/agrosmart/docs/02_requirements/non_functional_requirements.md)
