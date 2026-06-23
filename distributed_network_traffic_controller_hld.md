@@ -69,73 +69,82 @@
 ## 1. Introduction
 
 ### 1.1. Why this High-Level Design Document?
-The purpose of this High-Level Design (HLD) Document is to translate the functional and non-functional requirements of the **AgroSmart** platform into a formal software engineering blueprint. It defines the structural layout, component boundaries, database schemas, and external API interfaces for the frontend cross-platform client and Django REST API backend. It acts as the authoritative technical contract to guide implementation and eliminate ambiguities prior to coding.
+The purpose of this High-Level Design Document is to establish the authoritative software engineering blueprint for the AgroSmart platform. This document translates the business requirements and functional specifications into a concrete, pre-development technical contract. The system will rely on this design to eliminate architectural conflicts, lock in validation parameters, and align client-server communication interfaces before implementation begins.
 
 ### 1.2. Scope
-This HLD details the architecture for the AgroSmart Minimum Viable Product (MVP) release. The system provides localized crop predictions, fertilizer recommendations, fuzzy pesticide lookup, dynamic weather-based AI advice, offline caching, and asynchronous Web3 transaction auditing.
+This design document defines the structural parameters, databases, processing layers, and external service gateways for the initial release of the AgroSmart platform. The document covers the end-to-end flow from mobile input validation to asynchronous machine learning inference, localized offline heuristics, and background blockchain transaction logging.
 
 ### 1.3. Definitions
 *   **AgroSmart**: The Enterprise Agricultural Intelligence Platform.
-*   **RandomForestClassifier**: The machine learning model type used to predict crops (`crop_model.pkl`) and fertilizer needs (`fertilizer_model_final.pkl`).
-*   **Sepolia**: The public Ethereum proof-of-stake test network used to log cryptographic audit receipts.
-*   **Celery**: An asynchronous distributed task queue used to sign and submit blockchain audits without blocking main thread executions.
-*   **easy_localization**: The localization library used to toggle Urdu and English string bundles natively.
-*   **Provider**: The state management framework configured in the Flutter mobile application.
-*   **Etherscan**: The blockchain explorer used to verify recommendation transaction receipts.
-*   **Keychain / Keystore**: The secure device storage systems (iOS / Android) used to encrypt user tokens.
+*   **Random Forest Classifier**: The machine learning algorithm utilized to predict optimal crops and fertilizer components.
+*   **Crop Recommendation Model**: The classification binary and associated label encoders that map soil chemical variables to crop categories.
+*   **Fertilizer Prediction Model**: The classification binary and categorical mapping tables that output recommended fertilizer formulations.
+*   **Sepolia Test Network**: The public Ethereum proof-of-stake test network hosting the agricultural audit smart contract.
+*   **Celery Worker**: The background task runner process that manages asynchronous execution queues.
+*   **Redis Broker**: The in-memory data store acting as the message broker for the background task queue.
+*   **easy_localization**: The localization library configured to translate user interfaces on the mobile client.
+*   **Provider**: The state management framework configured to orchestrate client-side operations.
+*   **Etherscan**: The blockchain explorer portal used to verify audit receipt transaction hashes.
+*   **Keychain / Keystore**: The hardware-level secure storage environments configured on target mobile operating systems.
 
 ### 1.4. Overview
-The HLD will detail:
-*   General system constraints, assumptions, and design aspects (e.g. dataset spelling conventions).
-*   High-level application architecture and database schema designs (PostgreSQL, SQLite).
-*   Core software workflows (machine learning inference, dynamic weather prompting, and async blockchain auditing).
-*   Non-functional characteristics including performance thresholds, reliability failovers, and maintainability change escalation pipelines.
+The High-Level Design Document will detail:
+*   The system-wide product perspective, tools utilized, design constraints, and technical assumptions.
+*   The application architecture dividing standard farming tools from administrative audit portals.
+*   The client-server data access, database table definitions, and serialized API contracts.
+*   The exception handling codes and fallback operations during third-party network outages.
+*   The non-functional design parameters governing execution speeds, security encryption, and change control procedures.
 
 ---
 
 ## 2. General Description
 
 ### 2.1. Product Perspective
-The AgroSmart platform is structured as a client-server architecture. The frontend is a cross-platform mobile client built with Flutter, and the backend is a Python Django REST API application hosted on Microsoft Azure Web Apps. The Django server interfaces with pre-trained RandomForest models, a PostgreSQL audit log database, OpenWeatherMap API, Google Gemini 2.0 Flash API, and Infura Sepolia Ethereum RPC nodes.
+The AgroSmart platform will operate as a secure client-server framework. The user client tier is a cross-platform mobile application, and the server tier is a Python Django REST API backend hosted on Microsoft Azure Web Apps. The backend interacts with custom serialized classification models, a PostgreSQL audit log database, OpenWeatherMap meteorological feeds, Google Gemini generative artificial intelligence servers, and public Sepolia Ethereum RPC nodes.
 
-The system supports two user pathways:
-1.  **Rural Farmer**: Standard authenticated access to all crop/fertilizer inputs, fuzzy pesticide database searching, local offline weather fallbacks, and local history tracking.
-2.  **Scientific Review Inspector / Auditor**: Administrative read-only access to transaction history search queries and external Etherscan validation links.
+The system will implement a clear separation of capabilities between the two primary user personas:
+1.  **Rural Farmer**: Standard authenticated access to crop and fertilizer prediction forms, pesticide lookup search engines, real-time weather alerts, and local diagnostic logs.
+2.  **Scientific Review Inspector**: Administrative read-only access to global database records, keyword-based search queries, and external blockchain verification links.
+
+The complete data routing workflow, text-based architecture flows, and swim lane loops are detailed textually and diagrammatically in Appendix B of the Business Requirements Document.
 
 ### 2.2. Tools Used
-1.  **Flutter SDK**: Mobile client framework running on iOS (15.0+) and Android (API 28+).
-2.  **Django REST Framework (DRF)**: Python backend routing REST JSON requests.
-3.  **joblib & scikit-learn**: Python libraries to load and execute pre-trained RandomForest classification files.
-4.  **Celery & Redis**: Background worker queue and broker to offload Web3 transaction signing.
-5.  **Azure Web Apps & PostgreSQL**: Production hosting server and transactional database database storage.
-6.  **SQLite Helper**: Native local client relational caching table for offline access.
-7.  **Infura / Web3.py**: Blockchain connection wrapper to interact with Sepolia smart contracts.
-8.  **easy_localization**: Native localization package for English/Urdu translation files.
-9.  **Firebase Authentication SDK**: Authentication broker for secure registration and login.
-10. **Google Gemini 2.0 Flash API**: Generative cognitive engine for structured weather tips.
+1.  **Flutter SDK**: The mobile client rendering framework targeting iOS and Android platforms.
+2.  **Django REST Framework**: The server-side API application serving JSON data structures.
+3.  **joblib & scikit-learn**: The Python libraries utilized to serialize and load pre-trained classification models.
+4.  **Celery & Redis**: The asynchronous execution runner and message queue broker.
+5.  **Azure Web Apps & PostgreSQL**: The cloud web server hosting environment and relational database database storage.
+6.  **SQLite Helper**: The mobile client's local database engine configured to handle offline cache history.
+7.  **Web3.py & Infura**: The blockchain connection library and RPC gateway node configurations.
+8.  **easy_localization**: The frontend translation manager resolving Urdu and English localized dictionary assets.
+9.  **Firebase Authentication**: The identity broker managing registration validation and credential checking.
+10. **Google Gemini 2.0 Flash**: The large language model generating agricultural advice blocks.
 
 ### 2.3. General Constraints
-*   **Budget Bounding**: Total development, gas fees, and deployment costs are constrained under a fixed CapEx limit of **$35,000**.
-*   **Layout Safety Constraints**: Mobile forms must utilize non-resizing root layouts (`resizeToAvoidBottomInset: false` on Scaffold) to prevent input card collapses, handling soft keyboard view-insets manually.
-*   **Dataset Spelling Conventions**: Form inputs and database model schema serializers must strictly mirror dataset typographical quirks (`Temparature` (misspelled), `Humidity ` (trailing space), and `Phosphorous` (misspelled)) to prevent ML model evaluation failures.
+*   **Capital Expenditure**: The total platform design, deployment, gas fee management, and hosting costs shall not exceed the **$35,000** limit.
+*   **Form Layout Adjustments**: The mobile user interface shall disable native viewport resizing (`resizeToAvoidBottomInset` set to `false`) and calculate keyboard view-insets manually to prevent card collapses on low-end screens.
+*   **Typographical Label Ingestion**: To prevent machine learning model execution crashes, the frontend input forms, API validation serializers, and database models shall strictly maintain the non-standard strings matching the pre-trained data layers:
+    *   `Temparature` (misspelled with 'a' in the second syllable).
+    *   `Humidity ` (containing a trailing space character inside the string).
+    *   `Phosphorous` (misspelled with 'o' before 'u').
 
 ### 2.4. Assumptions
-*   **Hardware Sensors**: Target user mobile devices possess functioning internal GPS modules and flash storage.
-*   **Dataset Lock-In**: Pre-trained model structures are static MVP assets, meaning their feature definitions and conventions will not be altered without structural change escalation approvals.
-*   **API Accessibility**: Cloud gateways retain access to OpenWeatherMap and Sepolia Infura endpoints.
+*   **GPS Hardware**: User devices possess functioning GPS receivers to capture geographic coordinates.
+*   **Network Performance**: Staging environments will mimic standard connection speeds, and the local fallback rules engine will execute only when network calls exceed five seconds.
+*   **Model Immutability**: The pre-trained Random Forest model structures will remain static unless the technical change escalation path is formally signed off.
 
 ### 2.5. Special Design Aspects
-A key design aspect is the separation of real-time server-based ML model predictions from background blockchain audits. Network transaction signing is offloaded to Celery background tasks, allowing the Django API to return the recommendation immediately to the Flutter client.
+To maintain mobile UI responsiveness, the platform design will enforce a strict non-blocking audit strategy. Smart contract transactions shall never be signed or broadcast synchronously inside the HTTP request-response thread. Instead, execution is delegated to background Celery workers, ensuring the API returns crop and fertilizer suggestions to the mobile client in under two seconds.
 
 ---
 
 ## 3. Design Details
 
 ### 3.1. Main Design Features
-The primary design details focus on three aspects: the system architecture layers, the database schema configurations, and the dynamic execution pipelines (asynchronous ledger writes and high-availability offline rules engines).
+The design details define the structural boundaries, database tables, and communication processes of the AgroSmart platform, visualizing the client-server interface loops and data persistence logic.
 
 ### 3.2. Application Architecture
-The system supports distinct pathways for the two types of user personas:
+The application architecture will isolate user workflows based on verified security profiles. Standard farmers will navigate crop, fertilizer, pesticide, and weather forms, whereas review inspectors will access read-only audit search lists and transaction verification hyperlinks:
 
 ```mermaid
 graph TD
@@ -159,45 +168,39 @@ graph TD
 ### 3.3. Technology Architecture
 
 #### 3.3.1. Client-Server Architecture
-The interaction model between the client, backend, machine learning models, external services, and the blockchain is visualized below:
+The system layout, data flows, and external integrations will follow the structural model depicted below:
 
 ```mermaid
 graph TD
     A[Flutter Mobile Client] <-->|HTTP JSON REST| B[Django REST API Backend]
-    B -->|joblib load / inference| C[Custom Random Forest Models]
+    B -->|model loading / inference| C[Custom Random Forest Models]
     B -->|JSON lookup| D[Pesticide Knowledge Base]
     B -->|HTTP GET Request| E[OpenWeatherMap API]
     B -->|generate_content| F[Google Gemini 2.0 Flash API]
-    B -->|Web3.py RPC calls| G[Sepolia Ethereum Smart Contract]
+    B -->|Web3 RPC calls| G[Sepolia Ethereum Smart Contract]
     A -->|Firebase SDK| H[Firebase Authentication]
 ```
 
 #### 3.3.2. Presentation Layer
-The Flutter presentation layer uses the **Provider** state management pattern to trigger data loads and maintain state. The views utilize Frosted Glassmorphism overlays and custom language switchers that natively resolve English ('en') and Urdu ('ur') locale bundles.
+The presentation tier will execute natively on the target device via the Flutter framework. Screen rendering logic will monitor state changes through the Provider library. The views will use glassmorphic cards and local localization components to switch all on-screen titles, hints, and error logs instantly between Urdu and English.
 
 #### 3.3.3. Data Access Layer
-Data is structured across two boundaries:
-*   **Client SQLite Storage**: Relational tables caching user diagnostic queries locally on the device.
-*   **Server Azure PostgreSQL Database**: The centralized database database storage logging global telemetry audits and background celery states.
+Data storage is split into two systems:
+*   **Client SQLite Database**: Sandboxed storage file handling local log caching.
+*   **Azure PostgreSQL Database**: Centrally hosted cloud database storing global telemetry and audit logs.
 
 ---
 
 ### 3.4. Standards
-*   **Communication Protocol**: Secure HTTPS using standardized JSON payload headers:
-    ```json
-    {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    }
-    ```
-*   **Smart Contract Interface**: The logged audits are compiled using the Ethereum ABI structure, calling the `logRecommendation(string type, string recommendation, string inputData)` contract function.
+*   **Serialized Payloads**: The client and server will exchange data utilizing secure HTTPS connections and JSON formats.
+*   **Blockchain Integration**: The Celery background task queue will broadcast transactions using Ethereum ABI standards, calling the contract function `logRecommendation(string type, string recommendation, string inputData)`.
 
 ---
 
 ### 3.5. Database Design
 
-#### 3.5.1 PostgreSQL Global Audit Schema
-Used by the backend to log recommendation transactions and sync statuses:
+#### 3.5.1 PostgreSQL Global Audit Table
+The backend database will log recommendation events to PostgreSQL using the following schema:
 ```sql
 CREATE TABLE recommendation_audit_log (
     id SERIAL PRIMARY KEY,
@@ -211,15 +214,15 @@ CREATE TABLE recommendation_audit_log (
 );
 ```
 
-#### 3.5.2 SQLite Client Cache Schema
-Used on the mobile device to save diagnostic queries for offline access:
+#### 3.5.2 SQLite Client Caching Table
+The mobile database helper class will initialize and query the local SQLite database using the following definition, maintaining the exact typographical field names:
 ```sql
 CREATE TABLE diagnostic_history (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id TEXT NOT NULL,
-    query_type TEXT NOT NULL, -- 'crop', 'fertilizer', 'pesticide', 'weather'
-    inputs TEXT NOT NULL,     -- JSON stringified inputs
-    outputs TEXT NOT NULL,    -- JSON stringified results
+    query_type TEXT NOT NULL,
+    inputs TEXT NOT NULL,     -- Stringified JSON matching: N, P, K, pH, Temparature, Humidity , Moisture, Phosphorous, etc.
+    outputs TEXT NOT NULL,    -- Stringified JSON result payload
     tx_hash TEXT,             -- Sepolia transaction hash
     sync_status TEXT NOT NULL,-- 'Synchronized' or 'Pending Sync'
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -229,76 +232,75 @@ CREATE TABLE diagnostic_history (
 ---
 
 ### 3.6. Files
-*   **ML Model Files**: 
-    *   `crop_model.pkl` (Random Forest model) and `crop_label_encoder.pkl` (Categorical output decoder).
-    *   `fertilizer_model_final.pkl` (Fertilizer Random Forest model).
-    *   `fertilizer_target_encoder_final.pkl`, `fertilizer_encoder_Soil_Type.pkl`, and `fertilizer_encoder_Crop_Type.pkl` (encoders).
-*   **Localization Assets**: `en.json` and `ur.json` translation files inside the Flutter bundle assets.
+*   **Machine Learning Classifiers**: 
+    *   The Crop Recommendation Model binary and the Crop Label Encoder binary.
+    *   The Fertilizer Prediction Model binary, category Soil Type categorical encoder, and category Crop Type categorical encoder.
+*   **Localization Dictionaries**: The Urdu and English localized dictionary assets packed within the application assets folder.
 
 ---
 
 ### 3.7. User Interface
-The UI comprises 9 primary screen layouts defined in the FSD:
-1.  **Splash Screen**: Loads settings and secure keys; checks cached Firebase credentials.
-2.  **Login & Registration Screen**: Frosted glass card, English/Urdu switch, Firebase input validations, and keyboard-safe padding.
-3.  **Home Dashboard**: Central operations hub; shows query badge metrics and network warning banner.
-4.  **Crop Recommendation Form**: Ingests N, P, K, pH, temp, humidity, and rainfall; triggers range safety guides.
-5.  **Fertilizer Advisory Form**: Categorical soil/crop selectors and nutrient text fields matching dataset typos.
-6.  **Pesticide Diagnosis Form**: Autocomplete crop name and symptom description text area.
-7.  **Weather Smart Screen**: GPS coordinate tracker with manual city coordinate overrides.
-8.  **Diagnostic Results Screen**: Displays recommended results, structured weather details, and transaction hashes.
-9.  **Historical Audit Registry**: Filterable, keyword-searchable history index with swipe-to-delete gestures.
+The mobile presentation tier will consist of 9 main screens:
+1.  **Splash Screen**: Evaluates start-up parameters and routes the user based on Firebase session tokens.
+2.  **Login & Registration Screen**: frosted glass container overlaying the login background looping video asset.
+3.  **Home Dashboard**: Central hub displaying metric counts and network state warning banners.
+4.  **Crop Form Screen**: Numeric text fields, range guide overlays, and sliders for soil properties.
+5.  **Fertilizer Form Screen**: Categorical selectors and inputs matching the required dataset typos.
+6.  **Pesticide Search Screen**: Autocomplete crop name search box and multi-line symptom description text area.
+7.  **Weather Smart Screen**: Coordinate display with manual coordinate adjustments and city quick-select buttons.
+8.  **Diagnostic Results Screen**: Renders recommendation outputs and the external blockchain verification link.
+9.  **Historical Audit Registry**: Categorically filterable, keyword-searchable history index with swipe-to-delete gestures.
 
 ---
 
 ### 3.8. Reports
-The backend generates administrative query reports for Scientific Review Inspectors. Inspectors can retrieve global transaction histories, filter records by date ranges or query type, and access transaction hyperlinks to verify recommendation integrity on Sepolia.
+The backend will compile administrative reports for review inspectors. Inspectors can query PostgreSQL logs, filtering records by query types or timestamps to generate transaction reports with clickable Etherscan verification hashes.
 
 ---
 
 ### 3.9. Error Handling
-Third-party integration exceptions are caught and logged under designated IDs:
-*   **`ERR-INT-101` (OpenWeatherMap Failure)**: Timeout or API key failure; backend triggers mock fallback values for Islamabad and logs warning.
-*   **`ERR-INT-102` (Gemini API Limit reached)**: Out of quota; client interceptor redirects to local `get_fallback_advice()`.
+External integration exceptions will be caught, logged, and handled under unique identifiers:
+*   **`ERR-INT-101` (OpenWeatherMap Failure)**: Network loss or API rate limits; backend falls back to mock Islamabad parameters and logs a warning.
+*   **`ERR-INT-102` (Gemini API Limit reached)**: Free quota exhaustion; client intercepts query within 500ms and routes to the local fallback rules engine.
 *   **`ERR-INT-103` (Web3 Sync Latency / Gas Failure)**: Worker retries Web3 signing up to 3 times before updating state to `'Pending Blockchain Sync'` and raising alert to DevOps.
-*   **`ERR-INT-104` (Typo Serializer Error)**: Mismatch in expected spellings; serializer intercepts input data and forces realignment checks.
+*   **`ERR-INT-104` (Serializer Mismatch Error)**: Mismatch in expected spellings; serializer intercepts input data and forces data alignment validations.
 
 ---
 
 ### 3.10. Interfaces
-*   **Hardware Interface**: 
-    *   **GPS Receiver**: Extracts live coordinate variables (`lat`, `lon`).
-    *   **Keystore / Keychain**: Encrypts JWT secure session tokens locally.
-*   **Software Interface**:
+*   **Hardware Interfaces**:
+    *   **GPS Receiver**: Captures geographic latitude and longitude metrics.
+    *   **Keychain / Keystore**: Encrypts JWT secure session tokens locally.
+*   **Software Interfaces**:
     *   **OpenWeatherMap**: REST HTTP endpoint proxying weather conditions.
     *   **Google Gemini**: Cognitive formatting parser enforcing standard advising outputs.
-    *   **Sepolia Ethereum RPC Node**: Auditing blockchain ledger.
+    *   **Sepolia Ethereum RPC Node**: Auditing blockchain ledger. The Django REST framework view tier shall only write a localized record to the centralized database, mark its status as 'Pending Sync', hand off the payload parameters to a background task runner queue managed by Celery and Redis, and instantly return the suggestion back to the client. The background class worker alone shall handle Sepolia RPC node handshakes, sign the transaction payload using the server-side wallet key parameters outside the web process thread, handle block mining gas management, and update the PostgreSQL status log to 'Synchronized' with the resulting blockchain receipt hash.
 
 ---
 
 ### 3.11. Help
-*   **Visual Training Modules**: In-app step-by-step guides explaining soil extraction and inputs mapping in English and Urdu.
+*   **Visual Onboarding Guide**: Step-by-step Urdu and English instructional graphics embedded in the mobile assets folder explaining soil data collection.
 
 ---
 
 ### 3.12. Performance
-*   **Inference Latency**: Django REST model calculations must return outputs in under 2.0 seconds.
-*   **SQLite Caching speed**: Mobile database cache writes and searches must complete in under 100ms.
-*   **Offline Transition**: Offline status banner warning and local rules calculations must trigger in under 500ms.
+*   **API Response Time**: Server-side Random Forest model calculations must complete and return JSON recommendations in under 2.0 seconds.
+*   **SQLite Latency**: Local database caching reads, writes, and query searches on the mobile client must execute in under 100ms.
+*   **Offline Fallback Trigger**: UI network interceptors must trigger the local fallback engine in under 500ms when a connection drops.
 
 ---
 
 ### 3.13. Security
-*   **Token Encryption**: Secure local storage encrypts authentication tokens.
-*   **Password Complexity**: Account registration blocks credentials failing criteria checks (minimum 8 characters, uppercase, number, symbol).
-*   **Data Isolation**: Client-side database tables are sandboxed within the application directory and are inaccessible to other external software.
+*   **Token Encryption**: Cached Firebase authentication tokens must be encrypted locally using Keychain or Keystore APIs.
+*   **Credential Verification**: Password inputs must meet complexity checks (minimum 8 characters, uppercase, number, symbol) before account submission.
+*   **Data Isolation**: Local SQLite database files will be sandboxed within the application directory to prevent unauthorized data access.
 
 ---
 
 ### 3.14. Reliability
 
 #### 3.14.1 Asynchronous Blockchain Syncing Pipeline
-To prevent blockchain mining latency from blocking mobile UI threads, Web3 writing utilizes Celery workers:
+The backend will offload smart contract auditing to background workers to guarantee that blockchain transaction delays never block the mobile UI:
 
 ```mermaid
 sequenceDiagram
@@ -320,7 +322,7 @@ sequenceDiagram
 ```
 
 #### 3.14.2 High-Availability Offline Rules Engine
-If network dropouts occur or the cloud API times out (exceeding 5 seconds), client-side interceptors call `get_fallback_advice()` within 500ms using deterministic local rules:
+If cellular networks timeout (exceeding 5 seconds) or the device goes offline, client-side interceptors will redirect execution to the local fallback rules engine within 500ms, using the following decision paths:
 
 ```mermaid
 graph TD
@@ -335,7 +337,7 @@ graph TD
     H --> I[Display persistent orange warning banner]
 ```
 
-*   **Deterministic Thresholds**:
+*   **Offline Heuristics**:
     *   *Rain / Thunderstorm*: watering = "No", fertilizer = "Wait", pest = "Medium", tip = "Cover sensitive crops".
     *   *Temp > 38°C*: watering = "Yes", fertilizer = "Wait - Heat causes burn", pest = "High", tip = "Provide shade".
     *   *Humidity > 80%*: watering = "No", fertilizer = "Wait - risk of fungus", pest = "High - fungal risk", tip = "Ensure good air circulation".
@@ -351,39 +353,38 @@ To prevent validation exceptions and schema mismatches between client forms, dat
 3.  **Client-Side Parity Check**: Lead Architect Muhammad Omer Siddiqui updates Flutter input controllers.
 4.  **Project Sponsor Sign-Off**: Final approval from the Project Sponsor before deploying changes to staging.
 
-#### 3.15.2 Alerting Rules
-The PostgreSQL database logger catches third-party exceptions. If Sepolia RPC connection drops persist beyond 3 retries, Celery triggers automated Slack alerts to the DevOps channel (Fatima Al-Sayed).
+#### 3.15.2 Exception Log Alerting
+The database logging services will record third-party API timeout exceptions to PostgreSQL. Celery workers will monitor these logs; if Sepolia RPC connection drops persist beyond 3 retries, the worker will dispatch automated Slack alerts to the DevOps channel.
 
 ---
 
 ### 3.16. Portability
-The compiled Flutter application runs natively across iOS (15.0+) and Android (API 28+). The Django REST API uses dockerized containers to ensure seamless deployment and environment replication between Azure Staging and Azure Production Web App slots.
+The Flutter codebase will compile into native iOS and Android binaries. The Django backend will run inside dockerized containers to ensure consistent environments across staging and production slots.
 
 ---
 
 ### 3.17. Reusability
-Modular elements are decoupled:
-*   The `RandomForest` inference helper wrapper operates independently of REST API endpoints.
-*   The SQLite helper class functions as an isolated caching wrapper, allowing it to be reused for different transactional views.
+Modular structures will remain decoupled:
+*   The Random Forest inference logic will operate independently of the REST view serializers.
+*   The SQLite caching classes will run as generic helper wrappers, allowing them to be reused for future transactional views.
 
 ---
 
 ### 3.18. Application Compatibility
-The system ensures backward compatibility for mobile clients by isolating ML configuration models:
-*   The ML endpoint schema versioning allows newer Random Forest models to be loaded dynamically from standard `.pkl` files without requiring mobile client updates.
+Backward compatibility is maintained by decoupling models. Model updates will occur dynamically by replacing the pre-trained binaries on the server, ensuring that mobile client updates are not required to adopt updated machine learning configurations.
 
 ---
 
 ### 3.19. Resource Utilization
-*   **Thread Responsiveness**: Frontend calculations offload complex parsing to async isolates to prevent frame drops.
-*   **Database Locks**: PostgreSQL transactions use explicit JSONB columns to avoid table locking during high-concurrency inspector audits.
+*   **UI Thread Performance**: Large data structures will be processed in asynchronous background isolates on the mobile client.
+*   **Database Isolation**: PostgreSQL will record transaction records using JSONB types to prevent table-level indexing locks during parallel review inspector audits.
 
 ---
 
 ### 3.20. Major Classes
-*   **`AuthService`**: Coordinates Firebase login, signup, and local session key caching.
-*   **`ApiService`**: Dispatches HTTP JSON requests and handles base URL toggling (`useLocalBackend`).
-*   **`DatabaseHelper`**: Manages SQLite cache connections and query transactions.
-*   **`RandomForestClassifier`**: Models predictions based on soil inputs.
-*   **`WeatherLLMManager`**: Fetches weather metrics and parses Gemini cognitive advices.
-*   **`BlockchainWorker`**: signs Ethereum payloads and broadcasts audit logs via Infura RPC.
+*   **`AuthService`**: Interfaces with Firebase hooks and Keychain/Keystore to cache session keys.
+*   **`ApiService`**: Handles REST requests and directs endpoints depending on staging toggles.
+*   **`DatabaseHelper`**: Manages the local SQLite database cache and query transactions.
+*   **`RandomForestClassifier`**: Runs model predictions based on input data structures.
+*   **`WeatherLLMManager`**: Queries weather services and parses Gemini prompts.
+*   **`BlockchainWorker`**: signs transactions and broadcasts logs to Sepolia nodes.
